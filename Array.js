@@ -21,7 +21,6 @@
         Array.min()
         Array.max()
         Array.mult(factor)
-        
 */
 
 
