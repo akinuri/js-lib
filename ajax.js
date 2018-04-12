@@ -45,7 +45,7 @@ function ajax(url, options) {
     
     if (options.progress) {
         request.onprogress = function (e) {
-            if (request.status == 200) {
+            if (request.status == HTTPStatusCodes.OK) {
                 options.progress.call(request);
             }
         };
@@ -87,14 +87,3 @@ function ajax(url, options) {
     return request;
     
 }
-
-
-
-
-
-
-
-
-
-
-
