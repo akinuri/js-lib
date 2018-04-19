@@ -55,5 +55,4 @@ function ajax(url, options) {
     request.send(options.data);
     
     return request;
-    
 }
