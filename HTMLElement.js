@@ -55,7 +55,7 @@ function textQuery(elem, text, type, escape) {
     var nodes   = elem.querySelectorAll("*");
     var matches = [];
     for (var i = 0; i < nodes.length; i++) {
-        if (type == "equals" && nodes[i].innerText == text) {
+        if (type == "equals" && nodes[i].innerText && nodes[i].innerText == text) {
             matches.push(nodes[i]);
         } else if (type == "contains" && nodes[i].innerText && nodes[i].innerText.includes(text)) {
             matches.push(nodes[i]);
