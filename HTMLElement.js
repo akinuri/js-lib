@@ -50,6 +50,15 @@ HTMLElement.prototype.styles = function (prop, value) {
 
 
 
+HTMLElement.prototype.getIndex = function () {
+    if (this.parentElement) {
+        return Array.from(this.parentElement.children).indexOf(this);
+    }
+    return -1;
+};
+
+
+
 function textQuery(elem, text, type, escape) {
     var type    = type || "equals";
     var nodes   = elem.querySelectorAll("*");
