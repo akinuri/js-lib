@@ -1,3 +1,12 @@
+/*
+    Math.random(a [, b])
+    Math.sum(a [, b [, c ...]])
+    Math.average(a [, b [, c ...]])
+    Math.factorial(n)
+    Math.factors(n)
+    Math.median(a [, b [, c ...]])
+*/
+
 Math.random = function (random) {
     return function (a, b) {
         switch (arguments.length) {

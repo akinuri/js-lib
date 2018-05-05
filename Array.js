@@ -1,26 +1,26 @@
 /*
     Native
-        Array.subarray()
+        Array.prototype.subarray()
     
     Content
-        Array.shuffe()
+        Array.prototype.shuffe()
     
     Modify
-        Array.removeItem(item)
-        Array.removeItemByIndex(index)
+        Array.prototype.removeItem(item)
+        Array.prototype.removeItemByIndex(index)
     
     Access
-        Array.lastItem()
-        Array.lastIndex()
-        Array.randomItems(count)
-        Array.randomItem()
+        Array.prototype.lastItem()
+        Array.prototype.lastIndex()
+        Array.prototype.randomItems(count)
+        Array.prototype.randomItem()
         
     Math
-        Array.sum()
-        Array.average()
-        Array.min()
-        Array.max()
-        Array.mult(factor)
+        Array.prototype.sum()
+        Array.prototype.average()
+        Array.prototype.min()
+        Array.prototype.max()
+        Array.prototype.mult(factor)
 */
 
 
