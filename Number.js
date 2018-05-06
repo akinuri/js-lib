@@ -10,8 +10,8 @@
     Checks
         Number.prototype.isOdd()
         Number.prototype.isEven()
-        Number.isFloat()
-        Number.isNumeric()
+        Number.isFloat(n)
+        Number.isNumeric(value)
         Number.prototype.between(a, b [, inclusive])
         
     Modify
