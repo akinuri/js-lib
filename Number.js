@@ -1,28 +1,28 @@
 /*
     Arithmetic
-        Number.invert()
-        Number.round()
-        Number.floor()
-        Number.ceil()
-        Number.pow(exponent)
-        Number.sqrt()
+        Number.prototype.invert()
+        Number.prototype.round()
+        Number.prototype.floor()
+        Number.prototype.ceil()
+        Number.prototype.pow(exponent)
+        Number.prototype.sqrt()
         
     Checks
-        Number.isOdd()
-        Number.isEven()
+        Number.prototype.isOdd()
+        Number.prototype.isEven()
         Number.isFloat()
         Number.isNumeric()
-        Number.between(a, b)
+        Number.prototype.between(a, b [, inclusive])
         
     Modify
-        Number.clamp(min, max)
-        Number.loop(min, max)
-        Number.map(start1, stop1, start2, stop2)
+        Number.prototype.clamp(min, max)
+        Number.prototype.loop(min, max)
+        Number.prototype.map(start1, stop1, start2, stop2)
         
     Parts
-        Number.decimal()
-        Number.fraction()
-        Number.precision()
+        Number.prototype.decimal()
+        Number.prototype.fraction()
+        Number.prototype.precision()
 */
 
 
