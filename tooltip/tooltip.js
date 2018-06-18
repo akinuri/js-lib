@@ -88,8 +88,7 @@ ToolTip.prototype.addEventListeners = function () {
     this.source.addEventListener("mouseleave", this.events.mouseleave);
 };
 
-ToolTip.prototype.show = function (position, margin) {
-    var margin = margin || 5;
+ToolTip.prototype.show = function (position, margin_a, margin_b) {
     if (this.elem.parentElement == null) {
         this.elem.classList.add("appear");
         document.body.appendChild(this.elem);
@@ -98,24 +97,29 @@ ToolTip.prototype.show = function (position, margin) {
             self.elem.classList.remove("appear");
         }, 250);
     }
+    
+    var margin_a = margin_a || this.cursor.margin;
+    var margin_b = margin_b || 0;
+    
     if (!this.events.hovering && position) {
+        var w = parseInt(getComputedStyle(this.source).width, 10);
+        var h = parseInt(getComputedStyle(this.source).height, 10);
         switch (position) {
             case "top":
-                this.elem.style.left = this.source.offsetLeft + "px";
-                this.elem.style.top  = this.source.offsetTop - (parseInt(getComputedStyle(this.elem).height, 10) + margin) + "px";
+                this.elem.style.left = this.source.offsetLeft + margin_b + "px";
+                this.elem.style.top  = this.source.offsetTop - (h + margin_a) + "px";
                 break;
             case "right":
-                this.elem.style.left = this.source.offsetLeft + (parseInt(getComputedStyle(this.source).width, 10) + margin) + "px";
-                this.elem.style.top  = this.source.offsetTop + "px";
-                break;
-            case "left":
-                this.elem.style.left = this.source.offsetLeft - (parseInt(getComputedStyle(this.elem).width, 10) + margin) + "px";
-                this.elem.style.top  = this.source.offsetTop + "px";
+                this.elem.style.left = this.source.offsetLeft + (w + margin_a) + "px";
+                this.elem.style.top  = this.source.offsetTop + margin_b + "px";
                 break;
             case "bottom":
-                var h = parseInt(getComputedStyle(this.source).height, 10);
-                this.elem.style.left = this.source.offsetLeft + "px";
-                this.elem.style.top  = this.source.offsetTop + h + margin +"px";
+                this.elem.style.left = this.source.offsetLeft + margin_b + "px";
+                this.elem.style.top  = this.source.offsetTop + h + margin_a +"px";
+                break;
+            case "left":
+                this.elem.style.left = this.source.offsetLeft - (w + margin_a) + "px";
+                this.elem.style.top  = this.source.offsetTop + margin_b + "px";
                 break;
         }
     }
@@ -127,7 +131,7 @@ ToolTip.prototype.hide = function () {
     setTimeout(function () {
         self.elem.remove();
         self.elem.classList.remove("disappear");
-    }, 500);
+    }, 250);
 };
 
 ToolTip.init = function () {
