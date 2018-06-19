@@ -137,10 +137,10 @@ ToolTip.prototype.hide = function () {
 ToolTip.prototype.destroy = function () {
     this.hide();
     this.elem.remove();
-    this.source.tooltip = null;
     this.source.removeEventListener("mouseenter", this.events.mouseenter);
     this.source.removeEventListener("mouseleave", this.events.mouseleave);
     this.source.removeEventListener("mousemove", this.events.mousemove);
+    this.source.tooltip = null;
 };
 
 ToolTip.init = function () {
