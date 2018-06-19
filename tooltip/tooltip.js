@@ -134,6 +134,15 @@ ToolTip.prototype.hide = function () {
     }, 250);
 };
 
+ToolTip.prototype.destroy = function () {
+    this.hide();
+    this.elem.remove();
+    this.source.tooltip = null;
+    this.source.removeEventListener("mouseenter", this.events.mouseenter);
+    this.source.removeEventListener("mouseleave", this.events.mouseleave);
+    this.source.removeEventListener("mousemove", this.events.mousemove);
+};
+
 ToolTip.init = function () {
     var all = document.querySelectorAll("[title]");
     all.forEach(function (elem) {

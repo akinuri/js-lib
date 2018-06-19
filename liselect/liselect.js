@@ -38,7 +38,7 @@ function Liselect(list) {
     
     this.keys = {
         // stupid edge(ie) going its own way again
-        all  : ["ArrowUp", "ArrowDown", "Up", "Down"],
+        all  : ["ArrowUp", "ArrowDown", "Up", "Down", "Enter"],
         up   : ["ArrowUp", "Up"],
         down : ["ArrowDown", "Down"],
     };
@@ -62,6 +62,13 @@ Liselect.prototype.transform = function (list) {
     list.removeAttribute("data-name");
     list.removeAttribute("data-placeholder");
     list.insertBefore(placeholder, list.children[0]);
+    if (list.getAttribute("data-required")) {
+        input.setAttribute("required", "");
+    }
+    if (list.getAttribute("id")) {
+        container.setAttribute("id", list.id);
+        list.removeAttribute("id");
+    }
     container.appendChild(input);
     container.appendChild(arrow);
     container.appendChild(list);
@@ -85,7 +92,7 @@ Liselect.prototype.registerEvents = function (list) {
         self.toggleState();
     });
     $(this.arrow).on("click", function () {
-        $(self.input).trigger("focus");
+        self.focus();
         $(self.input).trigger("click");
     });
     
@@ -106,6 +113,7 @@ Liselect.prototype.registerEvents = function (list) {
         self.keyCapture = function (e) {
             var key = e.key;
             if (self.keys.all.includes(key)) {
+                e.preventDefault();
                 if (!self.isOpen) {
                     self.open();
                     return;
@@ -118,6 +126,7 @@ Liselect.prototype.registerEvents = function (list) {
                 index++;
             } else if (key == "Enter") {
                 self.select(self.options[index]);
+                e.preventDefault();
                 return;
             }
             index = index.loop(0, self.options.length);
@@ -142,6 +151,10 @@ Liselect.prototype.toggleState = function (list) {
     } else {
         this.open();
     }
+};
+
+Liselect.prototype.focus = function () {
+    $(this.input).trigger("focus");
 };
 
 Liselect.prototype.open = function (list) {
@@ -191,4 +204,11 @@ Liselect.prototype.select = function (li) {
     }
     
     this.close();
+};
+
+Liselect.prototype.required = function () {
+    if (this.input.getAttribute("required") != null && this.input.value == "") {
+        return true;
+    }
+    return false;
 };
