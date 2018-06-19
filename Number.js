@@ -13,6 +13,7 @@
         Number.isFloat(n)
         Number.isNumeric(value)
         Number.prototype.between(a, b [, inclusive])
+        Number.prototype.sign()
         
     Modify
         Number.prototype.clamp(min, max)
@@ -78,15 +79,15 @@ Number.isNumeric = function isNumeric(value) {
     return Number.isInteger(value) || Number.isFloat(value);
 };
 
-Number.prototype.between = function between(a, b, inclusive) {
-    var min = Math.min(a, b);
-    var max = Math.max(a, b);
-    if (inclusive) {
-        if (min <= this && this <= max) return true;
-    } else {
-        if (min < this && this < max) return true;
-    }
+Number.prototype.between = function between(min, max, min_inclusive, max_inclusive) {
+    if (min_inclusive) a--;
+    if (max_inclusive) b++;
+    if (min < this && this < max) return true;
     return false;
+};
+
+Number.prototype.sign = function getSign() {
+    return Math.sign(this);
 };
 
 
@@ -107,6 +108,23 @@ Number.prototype.loop = function loop(min, max) {
         num += max;
     }
     return num;
+};
+
+Number.prototype.loop = function loop(min, max) {
+    var min = min || 0;
+    var max = max || 0;
+    var result = this;
+    var dist = Math.abs(max - min);
+    if (this < min) {
+        var underflow = Math.abs(this - min);
+        var remainder = underflow % dist;
+        result = max - remainder;
+    } else if (this > max) {
+        var overflow = this - max;
+        var remainder = overflow % dist;
+        result = min + remainder;
+    }
+    return result.valueOf();
 };
 
 Number.prototype.map = function map(start1, stop1, start2, stop2) {

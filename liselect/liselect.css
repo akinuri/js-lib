@@ -1,0 +1,77 @@
+.li-select-container {
+    width: 200px;
+    display: table;
+    position: relative;
+    margin: .5em 0;
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+.li-select-container input {
+    background-color: white;
+    width: 100%;
+    padding: 2px 5px;
+    box-sizing: border-box;
+    border: 1px solid hsl(0, 0%, 60%);
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    font-size: inherit;
+}
+.li-select-container input.placeholder {
+    color: rgba(0,0,0,.5);
+}
+.li-select-container input:focus {
+    border: 1px solid hsl(210, 100%, 56%);
+    box-shadow: 0 0 1px hsl(210, 100%, 56%, .5);
+}
+
+.li-select-container .arrow {
+    font-size: .7em;
+    opacity: 0.75;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    user-select: none;
+    cursor: default;
+}
+.li-select-container:hover input:not(:focus) {
+    border: 1px solid hsla(0, 0%, 30%);
+}
+.li-select-container:hover .arrow {
+    opacity: 1;
+}
+
+.li-select-container ul {
+    background-color: white;
+    border: 1px solid hsl(0, 0%, 60%);
+    border-top: none;
+    user-select: none;
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+    box-sizing: border-box;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+.li-select-container.visible ul {
+    display: block;
+}
+.li-select-container ul li {
+    padding: 2px 5px;
+    cursor: default;
+}
+.li-select-container ul li.placeholder {
+    opacity: 0.5;
+}
+.li-select-container ul li.hover {
+    background-color: dodgerblue;
+    color: white;
+}
+.li-select-container ul li.placeholder.hover {
+    background-color: rgba(0,0,0,.1);
+    color: initial;
+}
