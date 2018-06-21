@@ -49,38 +49,48 @@ function Liselect(list) {
 // ============================== RESTRUCTURE
 
 Liselect.prototype.transform = function (list) {
-    var parent    = list.parentElement;
-    var refElem   = list.nextElementSibling;
+    this.container      = elem("div", {"class":"li-select-container"});
+    this.input          = null;
+    this.arrow          = elem("span", {"class":"arrow"}, "&#9660;", true);
+    this.list           = list;
+    this.placeholderli  = null;
     
-    var container   = elem("div", {"class":"li-select-container"});
-    var arrow       = elem("span", {"class":"arrow"}, "&#9660;", true);
-    var placeholder = elem("li", {"class":"placeholder"}, list.dataset.placeholder);
-    var input       = elem("input", {"type":"text", "readonly":"", "placeholder":placeholder.innerText});
-    
-    input.setAttribute("title", list.title);
-    list.removeAttribute("title");
-    list.removeAttribute("data-name");
-    list.removeAttribute("data-placeholder");
-    list.insertBefore(placeholder, list.children[0]);
-    if (list.getAttribute("data-required")) {
-        input.setAttribute("required", "");
+    if (typeof list.dataset.placeholder != "undefined") {
+        this.input = elem("input", {"type":"text", "readonly":"", "placeholder":list.dataset.placeholder});
+        this.placeholderli = elem("li", {"class":"placeholder"}, list.dataset.placeholder);
+        list.removeAttribute("data-placeholder");
+    } else {
+        this.input = elem("input", {"type":"text", "readonly":"", "placeholder":list.children[0].innerText});
     }
-    if (list.getAttribute("id")) {
-        container.setAttribute("id", list.id);
-        list.removeAttribute("id");
+    
+    if (this.list.title) {
+        this.input.setAttribute("title", this.list.title);
+        this.list.removeAttribute("title");
     }
-    container.appendChild(input);
-    container.appendChild(arrow);
-    container.appendChild(list);
-    parent.insertBefore(container, refElem);
+    if (this.list.getAttribute("data-required")) {
+        this.input.setAttribute("required", "");
+        this.list.removeAttribute("data-required");
+    }
+    if (this.list.getAttribute("data-name")) {
+        this.input.setAttribute("name", this.list.getAttribute("data-name"));
+        this.list.removeAttribute("data-name");
+    }
+    if (this.list.getAttribute("id")) {
+        this.container.setAttribute("id", this.list.id);
+        this.list.removeAttribute("id");
+    }
     
-    this.container = container;
-    this.input     = input;
-    this.arrow     = arrow;
-    this.list      = list;
-    this.options   = Array.from(list.children);
-    
-    container.liselect = this;
+    var parent = this.list.parentElement;
+    var nextEl = this.list.nextElementSibling;
+    if (this.placeholderli) {
+        this.list.insertBefore(this.placeholderli, this.list.children[0]);
+    }
+    this.options = Array.from(this.list.children);
+    this.container.appendChild(this.input);
+    this.container.appendChild(this.arrow);
+    this.container.appendChild(this.list);
+    parent.insertBefore(this.container, nextEl);
+    this.container.liselect = this;
 };
 
 // ============================== INTERACTION EVENTS

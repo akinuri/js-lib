@@ -8,12 +8,6 @@
     Date.datetime()
  */
 
-
-Date.prototype.addMinutes = function (m) {
-    this.setMinutes(this.getMinutes() + m);
-    return this;
-};
-
 Date.prototype.date = function () {
     var d = this.getDate().toString().padStart(2, 0);
     var m = (this.getMonth() + 1).toString().padStart(2, 0);
@@ -42,6 +36,11 @@ Date.time = function () {
 
 Date.datetime = function () {
     return Date.date() + " " + Date.time();
+};
+
+Date.prototype.addMinutes = function (m) {
+    this.setMinutes(this.getMinutes() + m);
+    return this;
 };
 
 

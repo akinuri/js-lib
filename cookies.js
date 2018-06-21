@@ -11,7 +11,11 @@ var cookies = {
         return table;
     },
     get : function getCookie(name) {
-        return unescape(cookies.getAll()[name]);
+        var cks = cookies.getAll();
+        if (cks[name]) {
+            return unescape(cks[name]);
+        }
+        return null;
     },
     set : function setCookie(name, value, expires, path, domain, secure) {
         var pairs = [];
