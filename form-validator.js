@@ -1,13 +1,5 @@
 // ======================================== HELPERS
 
-Object.prototype.length = function objLength() {
-    return Object.keys(this).length;
-};
-
-Object.prototype.keys = function getObjectKeys() {
-    return Object.keys(this);
-};
-
 async function asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
         await callback(array[index], index, array);
@@ -37,8 +29,8 @@ FormValidator.prototype.addError = function addField(fieldName, errorMessage) {
 FormValidator.prototype.validate = async function validateForm() {
     this.errors = {};
     var self = this;
-    
-    await asyncForEach(self.fields.keys(), async function (fieldName) {
+    console.log("validating");
+    await asyncForEach(Object.keys(self.fields), async function (fieldName) {
         var field = self.fields[fieldName];
         
         if (field.hasOwnProperty("required") && field.required && field.elem.value.length == 0) {
@@ -64,7 +56,7 @@ FormValidator.prototype.validate = async function validateForm() {
         
     });
     
-    if (self.errors.length() != 0) {
+    if (Object.keys(self.errors).length != 0) {
         // warn the user
         console.log("errors: ", self.errors);
     }
