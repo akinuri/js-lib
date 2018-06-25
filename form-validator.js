@@ -29,7 +29,7 @@ FormValidator.prototype.addError = function addField(fieldName, errorMessage) {
 FormValidator.prototype.validate = async function validateForm() {
     this.errors = {};
     var self = this;
-    console.log("validating");
+    
     await asyncForEach(Object.keys(self.fields), async function (fieldName) {
         var field = self.fields[fieldName];
         
