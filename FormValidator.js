@@ -8,11 +8,31 @@ async function asyncForEach(array, callback) {
 
 // ======================================== FormValidator
 
-function FormValidator(formElement) {
+function FormValidator(formElement, locale) {
     this.form = formElement;
     this.fields = {};
     this.errors = {};
+    this.locale = locale || "en";
 }
+
+FormValidator.errorMessages = {
+    required : {
+        en : "This field is required.",
+        tr : "Bu alan zorunludur.",
+    },
+    minLength : {
+        en : "Input length should not be less than {0} characters.",
+        tr : "Girdi uzunluğu en az {0} karakter olmalıdır.",
+    },
+    maxLength : {
+        en : "Input length should not be greater than {0} characters.",
+        tr : "Girdi uzunluğu en fazla {0} karakter olmalıdır.",
+    },
+    match : {
+        en : "Passwords do not match.",
+        tr : "Şifreler birbirini tutmuyor.",
+    },
+};
 
 FormValidator.prototype.addField = function addField(fieldName, options) {
     if (this.form.elements[fieldName]) {
@@ -34,30 +54,30 @@ FormValidator.prototype.validate = async function validateForm() {
         var field = self.fields[fieldName];
         
         if (field.hasOwnProperty("required") && field.required && field.elem.value.length == 0) {
-            self.addError(fieldName, "This field is required.");
-            // break;
+            self.addError(fieldName, FormValidator.errorMessages.required[self.locale]);
         }
         
         if (field.hasOwnProperty("minLength") && field.elem.value.length < field.minLength) {
-            self.addError(fieldName, "Input length should not be less than " + field.minLength + " characters.");
-            // break;
+            self.addError(fieldName, FormValidator.errorMessages.minLength[self.locale].replace("{0}", field.minLength));
         }
         
         if (field.hasOwnProperty("maxLength") && field.elem.value.length > field.maxLength) {
-            self.addError(fieldName, "Input length should not be greater than " + field.maxLength + " characters.");
-            // break;
+            self.addError(fieldName, FormValidator.errorMessages.maxLength[self.locale].replace("{0}", field.maxLength));
+        }
+        
+        if (field.hasOwnProperty("match")) {
+            var targetFieldName = field["match"];
+            var targetField     = self.fields[targetFieldName];
+            if (field.elem.value != targetField.elem.value) {
+                self.addError(fieldName, FormValidator.errorMessages.match[self.locale]);
+            }
         }
         
         if (field.hasOwnProperty("ajax")) {
-            // FormValidator can't possibly know what the call will return, so we can't add the error here
-            // it has to be done manually
             await field.ajax(self, field, fieldName);
         }
         
     });
     
-    if (Object.keys(self.errors).length != 0) {
-        // warn the user
-        console.log("errors: ", self.errors);
-    }
+    return this.errors;
 };
