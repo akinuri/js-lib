@@ -28,9 +28,9 @@ var EventListeners = {
     add : function logEventListener(listener) {
         EventListeners.listeners.push(listener);
     },
-    remove : function removeEventListener(victim) {
+    remove : function removeEventListener(victimListener) {
         EventListeners.forEach(function (listener, index) {
-            if (victim.target == listener.target && victim.type == listener.type && victim.callback == listener.callback) {
+            if (victimListener.target == listener.target && victimListener.type == listener.type && victimListener.callback == listener.callback) {
                 EventListeners.listeners.splice(index, 1);
             }
         });
