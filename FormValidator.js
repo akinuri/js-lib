@@ -9,10 +9,10 @@ async function asyncForEach(array, callback) {
 // ======================================== FormValidator
 
 function FormValidator(formElement, locale) {
-    this.form = formElement;
+    this.form   = formElement;
     this.fields = {};
-    this.errors = {};
     this.locale = locale || "en";
+    this.errors = {};
 }
 
 FormValidator.errorMessages = {
@@ -41,6 +41,13 @@ FormValidator.prototype.addField = function addField(fieldName, options) {
     }
 };
 
+FormValidator.prototype.addFields = function addFields(fields) {
+    for (var fieldName in fields) {
+        var options = fields[fieldName];
+        this.addField(fieldName, options);
+    }
+};
+
 FormValidator.prototype.addError = function addField(fieldName, errorMessage) {
     if (!this.errors.hasOwnProperty(fieldName)) { this.errors[fieldName] = []; }
     this.errors[fieldName].push(errorMessage);
@@ -48,7 +55,7 @@ FormValidator.prototype.addError = function addField(fieldName, errorMessage) {
 
 FormValidator.prototype.validate = async function validateForm() {
     this.errors = {};
-    var self = this;
+    var self   = this;
     
     await asyncForEach(Object.keys(self.fields), async function (fieldName) {
         var field = self.fields[fieldName];
