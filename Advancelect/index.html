@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Blank HTML5 Page</title>
+    <link rel="stylesheet" type="text/css" href="Advancelect.css" />
+</head>
+<body>
+
+<select name="role" data-placeholder="Role" title="Role">
+    <option value="admin">Administrator</option>
+    <option value="mod">Moderator</option>
+    <option>User</option>
+</select>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="../element.js"></script>
+<script src="Advancelect.js"></script>
+
+<script>
+    
+    var list = new Advancelect(document.getElementsByTagName("select")[0]);
+    
+</script>
+
+</body>
+</html>
