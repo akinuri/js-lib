@@ -14,16 +14,18 @@ TimedIf.prototype.init = function (condition, callback, interval, maxAttempts) {
     
     this.handler = setInterval(function () {
         
+        self.attempts++;
+        
         if (self.condition()) {
             self.callback();
             clearInterval(self.handler);
+            self.handler = null;
         }
         
         if (self.attempts >= self.maxAttempts) {
             clearInterval(self.handler);
+            self.handler = null;
         }
-        
-        self.attempts++;
         
     }, this.interval);
     
