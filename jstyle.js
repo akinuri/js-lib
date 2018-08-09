@@ -75,3 +75,31 @@ var jstyle = {
         this.appendRule(cssText);
     },
 };
+
+/* 
+jstyle.addRule("body", {
+    "background-color": "green",
+});
+
+jstyle.addRules({
+    "body" : {
+        "background-color": "red",
+    },
+    "p" : {
+        "color": "yellow",
+    },
+});
+
+jstyle.addMedia("screen and (max-width: 1200px)", "body", {
+    "background-color": "orange",
+});
+
+jstyle.addMedia("screen and (max-width: 1200px)", {
+    "body" : {
+        "background-color": "purple",
+    },
+    "p" : {
+        "color": "brown",
+    },
+});
+ */
