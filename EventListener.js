@@ -106,7 +106,7 @@ EventTarget.prototype.addEventListener = function (addEventListener) {
             case 2:
                 evtList = new EventListener(this, arguments[0], arguments[1]);
                 addEventListener.call(evtList.target, evtList.type, evtList.callback);
-                console.log(callback);
+                console.log(evtList.callback);
                 EventListeners.add(evtList);
                 return evtList;
             // EventTarget.addEventListener(type, callback, options)
