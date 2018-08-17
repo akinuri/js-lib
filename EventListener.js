@@ -102,11 +102,15 @@ EventTarget.prototype.addEventListener = function (addEventListener) {
     return function () {
         var evtList = null;
         switch (arguments.length) {
+            // EventTarget.addEventListener(type, callback)
             case 2:
                 evtList = new EventListener(this, arguments[0], arguments[1]);
                 addEventListener.call(evtList.target, evtList.type, evtList.callback);
+                console.log(callback);
                 EventListeners.add(evtList);
                 return evtList;
+            // EventTarget.addEventListener(type, callback, options)
+            // EventTarget.addEventListener(type, callback, useCapture)
             case 3:
                 evtList = new EventListener(this, arguments[0], arguments[1]);
                 switch (typeof arguments[2]) {
@@ -122,6 +126,7 @@ EventTarget.prototype.addEventListener = function (addEventListener) {
                         return evtList;
                 }
                 break;
+            // EventTarget.addEventListener(type, callback, useCapture, wantsUntrusted)
             case 4:
                 evtList = new EventListener(this, arguments[0], arguments[1]);
                 if (typeof arguments[2] == "boolean") {
