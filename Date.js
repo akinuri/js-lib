@@ -45,49 +45,57 @@ Date.prototype.addMinutes = function (m) {
 
 
 
-Date.times = {
-    s : 1000,
-    m : 1000 * 60,
-    h : 1000 * 60 * 60,
-    d : 1000 * 60 * 60 * 24,
+Date.unixTimeConstants = {
+    ms : 1,
+    s  : 1000,
+    m  : 1000 * 60,
+    h  : 1000 * 60 * 60,
+    d  : 1000 * 60 * 60 * 24,
 };
 
-Date.timeStamp2Duration = function ts2duration(ts) {
+Date.ut2duration = function ut2duration(ut) {
     var duration = {
-        s : null,
-        m : null,
-        h : null,
-        d : null,
+        ms : null,
+        s  : null,
+        m  : null,
+        h  : null,
+        d  : null,
     };
     
     var remainder = 0;
     
-    duration.d = Math.floor(ts / Date.times.d);
-    remainder = ts % Date.times.d;
-    if (duration.d == 0) remainder = ts;
+    duration.d = Math.floor(ut / Date.unixTimeConstants.d);
+    remainder  = ut % Date.unixTimeConstants.d;
+    if (duration.d == 0)
+        remainder = ut;
     
-    duration.h = Math.floor(remainder / Date.times.h);
-    remainder = remainder % Date.times.h;
-    if (duration.h == 0) remainder = ts;
+    duration.h = Math.floor(remainder / Date.unixTimeConstants.h);
+    remainder  = remainder % Date.unixTimeConstants.h;
+    if (duration.h == 0)
+        remainder = ut;
     
-    duration.m = Math.floor(remainder / Date.times.m);
-    remainder = remainder % Date.times.m;
-    if (duration.m == 0) remainder = ts;
+    duration.m = Math.floor(remainder / Date.unixTimeConstants.m);
+    remainder  = remainder % Date.unixTimeConstants.m;
+    if (duration.m == 0)
+        remainder = ut;
     
-    duration.s = Math.floor(remainder / Date.times.s);
-    remainder = remainder % Date.times.s;
+    duration.s = Math.floor(remainder / Date.unixTimeConstants.s);
+    remainder  = remainder % Date.unixTimeConstants.s;
+    if (duration.s == 0)
+        remainder = ut;
+    
+    duration.ms = remainder;
     
     return duration;
 };
-    
-Date.duration2String = function duration2string(duration, after) {
+
+Date.duration2String = function duration2string(duration, options) {
     var str = [];
-    if (duration.d) str.push(duration.d + " days");
-    if (duration.h) str.push(duration.h + " hours");
-    if (duration.m) str.push(duration.m + " minutes");
-    // if (duration.s) str.push(duration.s + " seconds");
-    if (after) {
-        str.push(after);
-    }
+    var options = options || {d : 1, h : 1, m : 1, s : 1, ms : 1};
+    if (duration.d && options.d) str.push(duration.d + " days");
+    if (duration.h && options.h) str.push(duration.h + " hours");
+    if (duration.m && options.m) str.push(duration.m + " minutes");
+    if (duration.s && options.s) str.push(duration.s + " seconds");
+    if (duration.ms && options.ms) str.push(duration.ms + " milliseconds");
     return str.join(" ");
 };

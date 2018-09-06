@@ -1,4 +1,4 @@
-function dash2camelCase(str) {
+function dashed2camelCase(str) {
     var words = str.split("-");
     if (words.length > 1) {
         var camelCase = words.slice(1).map(function (word) {
@@ -9,17 +9,15 @@ function dash2camelCase(str) {
     return words[0];
 }
 
-HTMLElement.prototype.styles = function (prop, value) {
-    if (prop) {
+function style(element, property, value) {
+    if (property) {
         if (value) {
-            this.style[dash2camelCase(prop)] = value;
+            element.style[dashed2camelCase(property)] = value;
         }
-        return getComputedStyle(this)[prop];
+        return getComputedStyle(element)[property];
     }
     return null;
-};
-
-
+}
 
 (function () {
     console.warn("HTMLElement.prototype has been extended with a method: toggleClass(classname1 [, className2])");
