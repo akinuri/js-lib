@@ -63,7 +63,12 @@ function shuffle(array) {
     return array;
 };
 
-
+// https://stackoverflow.com/a/11972692/2202732
+function shuffleCollection(parent) {
+    for (var i = parent.children.length; i >= 0; i--) {
+        parent.appendChild(parent.children[Math.random() * i | 0]);
+    }
+}
 
 
 
