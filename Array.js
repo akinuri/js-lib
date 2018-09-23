@@ -8,6 +8,7 @@
     Modify
         Array.prototype.removeItem(item)
         Array.prototype.removeItemByIndex(index)
+        Array.prototype.reverseEach(callback)
     
     Access
         Array.prototype.lastItem()
@@ -44,23 +45,23 @@ Array.prototype.subarray = function (start, length) {
 
 /* ==================== CONTENT ==================== */
 
-Array.prototype.shuffle = function () {
+function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var random	= Math.floor(Math.random() * (i + 1));
+        var temp	= array[i];
+        array[i]    = array[random];
+        array[random] = temp;
+    }
+    return array;
+};
+
+Array.prototype.shuffle = function shuffle () {
     for (var i = this.length - 1; i > 0; i--) {
         var random	= Math.floor(Math.random() * (i + 1));
         var temp	= this[i];
         this[i]		= this[random];
         this[random] = temp;
     }
-};
-
-function shuffle(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var random	= Math.floor(Math.random() * (i + 1));
-        var temp	= array[i];
-        array[i]		= array[random];
-        array[random] = temp;
-    }
-    return array;
 };
 
 // https://stackoverflow.com/a/11972692/2202732
@@ -85,6 +86,12 @@ Array.prototype.removeItem = function (item) {
 
 Array.prototype.removeItemByIndex = function (index) {
     return this.splice(index, 1);
+};
+
+Array.prototype.reverseEach = function reverseForEach (callback) {
+    for (var i = this.length - 1; i >= 0; i--) {
+        callback(this[i], i, this);
+    }
 };
 
 
