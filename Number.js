@@ -12,7 +12,7 @@
         Number.prototype.isEven()
         Number.isFloat(n)
         Number.isNumeric(value)
-        Number.prototype.between(a, b [, inclusive])
+        Number.prototype.between(a, b [, min_inclusive [, max_inclusive]])
         Number.prototype.sign()
         
     Modify
@@ -80,8 +80,8 @@ Number.isNumeric = function isNumeric(value) {
 };
 
 Number.prototype.between = function between(min, max, min_inclusive, max_inclusive) {
-    if (min_inclusive) a--;
-    if (max_inclusive) b++;
+    if (min_inclusive) min--;
+    if (max_inclusive) max++;
     if (min < this && this < max) return true;
     return false;
 };
