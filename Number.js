@@ -110,19 +110,28 @@ Number.prototype.loop = function loop(min, max) {
     return num;
 };
 
+// min and max are inclusive
 Number.prototype.loop = function loop(min, max) {
     var min = min || 0;
     var max = max || 0;
     var result = this;
-    var dist = Math.abs(max - min);
+    var dist = Math.abs(max - min) + 1;
     if (this < min) {
         var underflow = Math.abs(this - min);
         var remainder = underflow % dist;
-        result = max - remainder;
+        if (remainder == 0) {
+            result = min;
+        } else {
+            result = max - remainder + 1;
+        }
     } else if (this > max) {
         var overflow = this - max;
         var remainder = overflow % dist;
-        result = min + remainder;
+        if (remainder == 0) {
+            result = max;
+        } else {
+            result = min + remainder - 1;
+        }
     }
     return result.valueOf();
 };

@@ -1,6 +1,7 @@
 /*
     String.prototype.includes(substr [, startIndex])
     String.prototype.capitalize([locale])
+    String.prototype.latinize()
     String.prototype.toHex()
     String.prototype.toInt()
     String.prototype.toFloat()
@@ -36,6 +37,19 @@ String.prototype.capitalize = function capitalize(locale) {
         return initial.toUpperCase() + rest.toLowerCase();
     });
     return words.join(" ");
+}
+
+String.prototype.latinize = function capitalize(locale) {
+    var str = this;
+    var chars = [
+        ["ç", "c"], ["ğ", "g"], ["ı", "i"], ["ö", "o"], ["ş", "s"], ["ü", "u"],
+        ["Ç", "C"], ["Ğ", "G"], ["İ", "I"], ["Ö", "O"], ["Ş", "S"], ["Ü", "U"],
+        ["i̇", "i"],
+    ];
+    chars.forEach(function (c) {
+        str = str.replace(c[0], c[1]);
+    });
+    return str;
 }
 
 String.prototype.toHex = function str2hex() {
@@ -96,6 +110,36 @@ String.prototype.matches = function (regex) {
     }
     return results;
 };
+
+
+function latinize(str) {
+    var chars = [
+        ["ç", "c"], ["ğ", "g"], ["ı", "i"], ["ö", "o"], ["ş", "s"], ["ü", "u"], ["ü", "u"],
+        ["Ç", "C"], ["Ğ", "G"], ["İ", "I"], ["Ö", "O"], ["Ş", "S"], ["Ü", "U"],
+        ["i̇", "i"],
+    ];
+    for (let chr in chars) {
+        str = str.replace(chars[chr][0], chars[chr][1]);
+    }
+    return str;
+};
+
+function urlFriendly(str) {
+    var weirds = [
+        ["¦",   ""],
+        [" - ", " "],
+        ["&",   "n"],
+    ];
+    var str = latinize(str);
+    var str = str.toLowerCase();
+    for (let chr in weirds) {
+        str = str.replace(chr[0], chr[1]);
+    }
+    str = str.split(/\s+/g);
+    return str.join("-");
+};
+
+
 
 
 
