@@ -12,6 +12,15 @@ function ajax(url, options) {
     
     var request = new XMLHttpRequest();
     
+    request.open(options.method, url, options.async, options.user, options.password);
+    
+    if (options.headers) {
+        for (let header in headers) {
+            let = value = headers[header];
+            xhr.setRequestHeader(header, value);
+        }
+    }
+    
     if (options.start) {
         request.onloadstart = options.start.bind(request);
     }
@@ -50,7 +59,9 @@ function ajax(url, options) {
         
     }
     
-    request.open(options.method, url, options.async, options.user, options.password);
+    if (options.timeout) {
+        request.timeout = options.timeout;
+    }
     
     request.send(options.data);
     

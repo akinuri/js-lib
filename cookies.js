@@ -1,30 +1,27 @@
 var cookies = {
+    get : function getCookie(name) {
+        var match = document.cookie.match(new RegExp("(?:^| )" + encodeURIComponent(name) + "=([^;]+)"));
+        if (match) {
+            return decodeURIComponent(match[1]);
+        }
+    },
     getAll : function getAllCookies() {
         var table = {};
         var cookies = document.cookie.split(";");
         cookies.forEach(function (cookie) {
-            var cookie = cookie.split("=");
-            var name   = cookie[0].trim();
-            var value  = cookie[1].trim();
-            table[name] = value;
+            var cookie = cookie.trim().split("=");
+            table[cookie[0]] = cookie[1];
         });
         return table;
     },
-    get : function getCookie(name) {
-        var cks = cookies.getAll();
-        if (cks[name]) {
-            return unescape(cks[name]);
-        }
-        return null;
-    },
-    set : function setCookie(name, value, expires, path, domain, secure) {
+    set : function setCookie(name, value, maxAge, path, domain) {
         var pairs = [];
-        pairs.push( name + "=" + escape(value) );
-        if (expires) {
-            if (typeof expires == "number")
-                pairs.push( "max-age=" + expires );
+        pairs.push( encodeURIComponent(name) + "=" + encodeURIComponent(value) );
+        if (maxAge) {
+            if (typeof maxAge == "number")
+                pairs.push( "max-age=" + maxAge );
             else
-                pairs.push( "expires=" + expires );
+                pairs.push( "expires=" + maxAge );
         }
         if (path)
             pairs.push( "path=" + path );
@@ -33,9 +30,14 @@ var cookies = {
         document.cookie = pairs.join("; ");
     },
     del : function deleteCookie(name) {
-        cookies.set(name, "", (new Date(0)).toUTCString());
+        cookies.set(name, "", "Thu, 01 Jan 1970 00:00:00 GMT");
     },
-    log : function logAllCookies() {
+    log : function logCookie(name) {
+        if (typeof console.table === "function") {
+            console.table({name : cookies.get(name)});
+        }
+    },
+    logAll : function logAllCookies() {
         if (typeof console.table === "function") {
             console.table(cookies.getAll());
         }
