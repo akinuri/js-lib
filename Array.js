@@ -157,12 +157,15 @@ Array.prototype.round = function () {
 };
 
 Array.prototype.sum = function () {
-    return this.reduce(function (previousValue, currentValue) {
-        return previousValue + currentValue;
-    });
+    if (this.length) {
+        return this.reduce(function (sum, currentValue) {
+            return sum + currentValue;
+        });
+    }
+    return null;
 };
 
-Array.prototype.average = function () {
+Array.prototype.avg = function () {
     return this.sum() / this.length;
 };
 

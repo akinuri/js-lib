@@ -1,7 +1,7 @@
 /*
     Math.random(a [, b])
     Math.sum(a [, b [, c ...]])
-    Math.average(a [, b [, c ...]])
+    Math.avg(a [, b [, c ...]])
     Math.factorial(n)
     Math.factors(n)
     Math.median(a [, b [, c ...]])
@@ -20,12 +20,12 @@ Math.random = function (random) {
 }(Math.random);
 
 Math.sum = function () {
-    return Array.from(arguments).reduce(function (previousValue, currentValue) {
-        return previousValue + currentValue;
+    return Array.from(arguments).reduce(function (sum, currentValue) {
+        return sum + currentValue;
     });
 };
 
-Math.average = function () {
+Math.avg = function () {
     var input = Array.from(arguments);
     return Math.sum(input) / input.length;
 };
@@ -70,5 +70,20 @@ Math.median = function () {
     } else {
         values.push( sorted[ (sorted.length + 1) / 2 ] );
     }
-    return Math.average.apply(null, values);
+    return Math.avg.apply(null, values);
 };
+
+Math.stdev = function () {
+    var values = Array.from(arguments);
+    var average = Math.avg.apply(null, values);
+    var variance = values.map(value => value * value) / values.length;
+    var stdev = Math.sqrt(variance);
+    return stdev;
+};
+
+
+
+
+
+
+

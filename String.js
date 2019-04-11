@@ -1,4 +1,5 @@
 /*
+    String.prototype.quote(quoteChar)
     String.prototype.includes(substr [, startIndex])
     String.prototype.capitalize([locale])
     String.prototype.latinize()
@@ -9,6 +10,16 @@
     String.prototype.insert(index, string)
     String.prototype.matches(regex)
  */
+
+
+String.prototype.quote = function (includes) {
+    console.warn("String.prototype has been extended with a .quote() method.");
+    return function (quote) {
+        var quote = quote || "\"";
+        return quote + this + quote;
+    }
+}();
+
 
 String.prototype.includes = function (includes) {
     console.warn("String.prototype.includes() has been modified.");
@@ -26,6 +37,7 @@ String.prototype.includes = function (includes) {
     }
 }(String.prototype.includes);
 
+
 String.prototype.capitalize = function capitalize(locale) {
     var words = this.split(" ");
     words = words.map(function (word) {
@@ -38,6 +50,7 @@ String.prototype.capitalize = function capitalize(locale) {
     });
     return words.join(" ");
 }
+
 
 String.prototype.latinize = function capitalize(locale) {
     var str = this;
@@ -52,15 +65,18 @@ String.prototype.latinize = function capitalize(locale) {
     return str;
 }
 
+
 String.prototype.toHex = function str2hex() {
     return this.split("").map(function (chr) {
         return chr.charCodeAt(0).toString(16);
     }).join("");
 }
 
+
 String.prototype.toInt = function str2int(radix) {
     return parseInt(this, radix);
 }
+
 
 String.prototype.toFloat = function str2float() {
     return parseFloat(this);
