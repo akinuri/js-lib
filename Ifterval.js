@@ -1,8 +1,8 @@
-var TimedIf = function (condition, callback, interval, maxAttempts) {
-    return new TimedIf.prototype.init(condition, callback, interval, maxAttempts);
+var Ifterval = function (condition, callback, interval, maxAttempts) {
+    return new Ifterval.prototype.init(condition, callback, interval, maxAttempts);
 }
 
-TimedIf.prototype.init = function (condition, callback, interval, maxAttempts) {
+Ifterval.prototype.init = function (condition, callback, interval, maxAttempts) {
     
     this.condition   = condition;
     this.callback    = callback;
@@ -31,4 +31,15 @@ TimedIf.prototype.init = function (condition, callback, interval, maxAttempts) {
     
 };
 
-TimedIf.prototype.init.prototype = TimedIf.prototype;
+Ifterval.prototype.init.prototype = Ifterval.prototype;
+
+/* 
+// demo
+Ifterval(function () {
+    console.log("checking");
+    if (a == 2) return true;
+    return false;
+}, function () {
+    console.log("finally");
+}, 500, 20);
+ */

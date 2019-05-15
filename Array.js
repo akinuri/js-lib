@@ -9,6 +9,7 @@
         Array.prototype.removeItem(item)
         Array.prototype.removeItemByIndex(index)
         Array.prototype.reverseEach(callback)
+        Array.prototype.unique(callback)
     
     Access
         Array.prototype.lastItem()
@@ -94,6 +95,12 @@ Array.prototype.reverseEach = function reverseForEach (callback) {
     }
 };
 
+Array.prototype.unique = function (callback) {
+    return this.filter(function (item, index, array) {
+        return array.indexOf(item) == index;
+    });
+};
+
 
 
 
@@ -156,6 +163,15 @@ Array.prototype.round = function () {
     return result;
 };
 
+function array_sum(array) {
+    if (array.length) {
+        return array.reduce(function (sum, currentValue) {
+            return sum + currentValue;
+        });
+    }
+    return null;
+}
+
 Array.prototype.sum = function () {
     if (this.length) {
         return this.reduce(function (sum, currentValue) {
@@ -164,6 +180,10 @@ Array.prototype.sum = function () {
     }
     return null;
 };
+
+function array_avg(array) {
+    return array_sum(array) / array.length;
+}
 
 Array.prototype.avg = function () {
     return this.sum() / this.length;
