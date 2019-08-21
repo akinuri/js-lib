@@ -173,3 +173,13 @@ Number.prototype.precision = function getSetPecision() {
     }
     return 0;
 };
+
+
+
+
+
+/* ==================== CURRENCY ==================== */
+
+Number.prototype.format = function number_format() {
+    
+};
