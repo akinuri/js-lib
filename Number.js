@@ -103,9 +103,13 @@ Number.prototype.sign = function getSign() {
 
 /* ==================== MODIFY ==================== */
 
+function number_clamp(number, min, max) {
+    return Math.min(Math.max(number, min), max);
+}
 Number.prototype.clamp = function clamp(min, max) {
-    return Math.min(Math.max(this, min), max);
+    return number_clamp(this, min, max);
 };
+
 
 Number.prototype.loop = function loop(min, max) {
     var min = min || 0;
