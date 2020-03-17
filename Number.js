@@ -79,19 +79,24 @@ Number.isNumeric = function isNumeric(value) {
     return Number.isInteger(value) || Number.isFloat(value);
 };
 
+
+function numBetween(num, min, max, exclusive) {
+    if ([typeof num, typeof min, typeof max].includes("undefined")) return null;
+    var exclusive = exclusive || false;
+    if (!exclusive) {
+        min--;
+        max++;
+    }
+    return min < num && num < max;
+}
+
 Number.prototype.between = (function () {
     console.warn("Number.prototype has been extended with .between(min, max, exclusive?) method.");
     return function (min, max, exclusive) {
-        var min = min || 0;
-        var max = max || 100;
-        var exclusive = exclusive || false;
-        if (!exclusive) {
-            min--;
-            max++;
-        }
-        return min < this && this < max;
+        return numBetween(this, min, max, exclusive);
     }
 })();
+
 
 Number.prototype.sign = function getSign() {
     return Math.sign(this);

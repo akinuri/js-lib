@@ -9,7 +9,7 @@
         Array.prototype.removeItem(item)
         Array.prototype.removeItemByIndex(index)
         Array.prototype.reverseEach(callback)
-        Array.prototype.unique(callback)
+        Array.prototype.unique()
     
     Access
         Array.prototype.lastItem()
@@ -29,17 +29,40 @@
 
 
 
+Array.prototype.reverseForEach = function (callback) {
+    console.warn("Array.prototype has been extended with reverseForEach() method.");
+    return function (callback) {
+        if (this.length == 0 || !callback) {
+            return;
+        }
+        for (let i = this.length - 1; i >= 0; i--) {
+            callback(this[i], i);
+        }
+    };
+}();
+
+
+
+
+
 /* ==================== NATIVE ==================== */
 
-Array.prototype.subarray = function (start, length) {
-    start  = start || 0;
-    length = length || this.length;
-    if (start < 0) {
-        return this.slice(this.length + start);
-    }
-    return this.slice(start, start + length);
-};
+// String.prototype.substring(start, ?end) == Array.prototype.slice(?start, ?end)
+// String.prototype.substr(from, ?length)  == Array.subarr(start, ?length)
 
+Array.prototype.subarr = function () {
+    console.warn("Array.prototype has been extended with subarr(start, ?length) method.");
+    return function (from, length) {
+        let start  = from || 0;
+        if (length == undefined) {
+            length = this.length;
+        }
+        if (start < 0) {
+            start = this.length + start;
+        }
+        return this.slice(start, start + length);
+    }
+}();
 
 
 
@@ -89,13 +112,13 @@ Array.prototype.removeItemByIndex = function (index) {
     return this.splice(index, 1);
 };
 
-Array.prototype.reverseEach = function reverseForEach (callback) {
+Array.prototype.reverseEach = function reverseForEach(callback) {
     for (var i = this.length - 1; i >= 0; i--) {
         callback(this[i], i, this);
     }
 };
 
-Array.prototype.unique = function (callback) {
+Array.prototype.unique = function () {
     return this.filter(function (item, index, array) {
         return array.indexOf(item) == index;
     });
@@ -148,9 +171,14 @@ Array.prototype.lastIndex = function (item) {
 
 
 
-/* ==================== MATH ==================== */
+/* ============================== MATH ============================== */
 
-// requires Number.isFloat() and Number.round()
+
+/**
+ * Returns a copy of the array where all numbers in the array are rounded.
+ * 
+ * @require Number.isFloat(), Number.round()
+ */
 Array.prototype.round = function () {
     var result = [];
     for (var i = 0; i < this.length; i++) {
@@ -163,39 +191,43 @@ Array.prototype.round = function () {
     return result;
 };
 
-function array_sum(array) {
-    if (array.length) {
-        return array.reduce(function (sum, currentValue) {
-            return sum + currentValue;
-        });
-    }
-    return null;
-}
 
+/**
+ * Returns the sum of all numbers in the array.
+ */
 Array.prototype.sum = function () {
-    if (this.length) {
-        return this.reduce(function (sum, currentValue) {
-            return sum + currentValue;
-        });
+    console.warn("Array.prototype has been extended with sum() method.");
+    return function () {
+        if (this.length) {
+            return this.reduce(function (sum, currentValue) {
+                return (parseFloat(sum) || 0) + (parseFloat(currentValue) || 0);
+            });
+        }
+        return null;
     }
-    return null;
-};
+}();
 
-function array_avg(array) {
-    return array_sum(array) / array.length;
-}
 
+/**
+ * Returns the average of the numbers in the array.
+ */
 Array.prototype.avg = function () {
-    return this.sum() / this.length;
-};
+    console.warn("Array.prototype has been extended with avg() method.");
+    return function () {
+        return this.sum() / this.length;
+    }
+}();
+
 
 Array.prototype.min = function () {
     return Math.min.apply(null, this);
 };
 
+
 Array.prototype.max = function () {
     return Math.max.apply(null, this);
 };
+
 
 // requires Number.isNumeric()
 Array.prototype.mult = function (factor) {
