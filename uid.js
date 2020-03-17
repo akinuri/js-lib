@@ -72,8 +72,8 @@ var UID = {
         for (let i = 0; i < iterations; i++) {
             UID.generate(idLength, false);
         }
-        console.log(UID.collisions.length + "/" + iterations);
-        console.log({...UID});
+        console.log(UID.collisions.length + " collisions in " + iterations + " ids");
+        console.log({ids : UID.ids.slice(), collisions: UID.collisions.slice() });
         UID.reset();
     },
     
