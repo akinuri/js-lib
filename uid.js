@@ -47,7 +47,7 @@ var UID = {
     },
     
     /**
-     * Generates a random string.
+     * Generates a random string to be used as an id.
      */
     random : function generateRandomString(length = 8) {
         if (length > 8) length = 8;
