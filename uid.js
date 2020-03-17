@@ -63,15 +63,18 @@ var UID = {
     reset : function resetIDsAndCollisions() {
         UID.ids = [];
         UID.collisions = [];
-    }
+    },
+    
+    /**
+     * Collision test.
+     */
+    test : function (iterations = 10000, idLength = 4) {
+        for (let i = 0; i < iterations; i++) {
+            UID.generate(idLength, false);
+        }
+        console.log(UID.collisions.length + "/" + iterations);
+        console.log({...UID});
+        UID.reset();
+    },
     
 };
-
-/* 
-// collision test
-let iterations = 10000;
-for (let i = 0; i < iterations; i++) {
-    UID.generate(4, false);
-}
-console.log(UID.collisions.length + "/" + iterations);
- */
