@@ -23,7 +23,7 @@ var UID = {
      * Generates an id.
      * Logs it in internal storage, AND (if desired) to the console, AND generates a new id if it collides with previous ids.
      */
-    generate   : function generateUniqueID(length, retryOnCollision = true, logCollision = false) {
+    generate : function generateUniqueID(length, retryOnCollision = true, logCollision = false) {
         let id = UID.random(length);
         if (UID.isUnique(id)) {
             UID.ids.push(id);
