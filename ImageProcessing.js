@@ -29,14 +29,25 @@ function calcPos(origin, angle, length) {
 }
 
 
+/**
+ * Returns the pixel array at the specified coordinate.
+ */
 function getPixel(imageData, x, y) {
     return getPixelByIndex(imageData, pos2index(imageData, x, y));
 }
 
-function setPixel(imageData, x, y, rgbaArray) {
-    setPixelByIndex(imageData, pos2index(imageData, x, y), rgbaArray);
+
+/**
+ * Returns the index location of a coordinate (x,y).
+ */
+function pos2index(imageData, x, y) {
+    return 4 * (y * imageData.width + x);
 }
 
+
+/**
+ * Returns the RGBA values at the specified index location.
+ */
 function getPixelByIndex(imageData, index) {
     return [
         imageData.data[index + 0],
@@ -46,6 +57,12 @@ function getPixelByIndex(imageData, index) {
     ];
 }
 
+
+function setPixel(imageData, x, y, rgbaArray) {
+    setPixelByIndex(imageData, pos2index(imageData, x, y), rgbaArray);
+}
+
+
 function setPixelByIndex(imageData, index, rgbaArray) {
     imageData.data[index + 0] = rgbaArray[0];
     imageData.data[index + 1] = rgbaArray[1];
@@ -53,9 +70,6 @@ function setPixelByIndex(imageData, index, rgbaArray) {
     imageData.data[index + 3] = rgbaArray[3];
 }
 
-function pos2index(imageData, x, y) {
-    return 4 * (y * imageData.width + x);
-}
 
 function index2pos(imageData, index) {
     index /= 4;
