@@ -30,23 +30,21 @@ function calcPos(origin, angle, length) {
 
 
 /**
- * Returns the pixel array at the specified coordinate.
+ * Returns the pixel array at the specified position.
  */
 function getPixel(imageData, x, y) {
     return getPixelByIndex(imageData, pos2index(imageData, x, y));
 }
 
-
 /**
- * Returns the index location of a coordinate (x,y).
+ * Returns the index of a position.
  */
 function pos2index(imageData, x, y) {
     return 4 * (y * imageData.width + x);
 }
 
-
 /**
- * Returns the RGBA values at the specified index location.
+ * Returns the RGBA values at the specified index.
  */
 function getPixelByIndex(imageData, index) {
     return [
