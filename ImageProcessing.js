@@ -37,13 +37,6 @@ function getPixel(imageData, x, y) {
 }
 
 /**
- * Returns the index of a position.
- */
-function pos2index(imageData, x, y) {
-    return 4 * (y * imageData.width + x);
-}
-
-/**
  * Returns the RGBA values at the specified index.
  */
 function getPixelByIndex(imageData, index) {
@@ -53,6 +46,13 @@ function getPixelByIndex(imageData, index) {
         imageData.data[index + 2],
         imageData.data[index + 3],
     ];
+}
+
+/**
+ * Returns the index of a position.
+ */
+function pos2index(imageData, x, y) {
+    return 4 * (y * imageData.width + x);
 }
 
 
