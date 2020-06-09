@@ -1,5 +1,5 @@
 /**
- * Returns the first element that matches/includes the specified text.
+ * Returns the first element that matches the specified text.
  */
 function queryText(elem, text, type = "equals") {
     
@@ -40,7 +40,7 @@ function queryText(elem, text, type = "equals") {
 
 
 /**
- * Returns an array of elements that match/includes the specified text.
+ * Returns an array of elements that match the specified text.
  */
 function queryTextAll(elem, text, type = "equals") {
     
