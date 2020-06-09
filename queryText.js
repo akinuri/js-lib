@@ -1,9 +1,9 @@
 /**
- * Returns the first element that matches/contains the specified text.
+ * Returns the first element that matches/includes the specified text.
  */
 function queryText(elem, text, type = "equals") {
     
-    if ( !(elem instanceof HTMLElement) || !text || !["equals", "contains"].includes(type)) {
+    if ( !(elem instanceof HTMLElement) || !text || !["equals", "includes"].includes(type)) {
         return null;
     }
     
@@ -19,7 +19,7 @@ function queryText(elem, text, type = "equals") {
                 return node.parentElement;
             }
         }
-        else if (type == "contains") {
+        else if (type == "includes") {
             if (node.textContent && node.textContent.includes(text)) {
                 return node.parentElement;
             }
@@ -44,7 +44,7 @@ function queryText(elem, text, type = "equals") {
  */
 function queryTextAll(elem, text, type = "equals") {
     
-    if ( !(elem instanceof HTMLElement) || !text || !["equals", "contains"].includes(type)) {
+    if ( !(elem instanceof HTMLElement) || !text || !["equals", "includes"].includes(type)) {
         return [];
     }
     
@@ -61,7 +61,7 @@ function queryTextAll(elem, text, type = "equals") {
                 matches.push(node.parentElement);
             }
         }
-        else if (type == "contains") {
+        else if (type == "includes") {
             if (nodes.textContent && nodes.textContent.includes(text)) {
                 matches.push(node.parentElement);
             }
