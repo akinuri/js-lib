@@ -7,10 +7,10 @@ function queryText(elem, text, type = "equals") {
         return null;
     }
     
-    var nodes = Array.from(elem.childNodes);
+    let nodes = Array.from(elem.childNodes);
     
-    var textNodes = nodes.filter(node => node.nodeName == "#text");
-    var elemNodes = nodes.filter(node => !["#comment", "#text", "SCRIPT", "IFRAME"].includes(node.nodeName));
+    let textNodes = nodes.filter(node => node.nodeName == "#text");
+    let elemNodes = nodes.filter(node => !["#comment", "#text", "SCRIPT", "IFRAME"].includes(node.nodeName));
     
     for (let i = 0; i < textNodes.length; i++) {
         let node = textNodes[i];
@@ -28,7 +28,7 @@ function queryText(elem, text, type = "equals") {
     }
     
     for (let i = 0; i < elemNodes.length; i++) {
-        var match = queryText(elemNodes[i], text, type);
+        let match = queryText(elemNodes[i], text, type);
         if (match) {
             return match;
         }
@@ -48,12 +48,12 @@ function queryTextAll(elem, text, type = "equals") {
         return [];
     }
     
-    var nodes = Array.from(elem.childNodes);
+    let nodes = Array.from(elem.childNodes);
     
-    var textNodes = nodes.filter(node => node.nodeName == "#text");
-    var elemNodes = nodes.filter(node => !["#comment", "#text", "SCRIPT", "IFRAME"].includes(node.nodeName));
+    let textNodes = nodes.filter(node => node.nodeName == "#text");
+    let elemNodes = nodes.filter(node => !["#comment", "#text", "SCRIPT", "IFRAME"].includes(node.nodeName));
     
-    var matches = [];
+    let matches = [];
     
     textNodes.forEach(node => {
         if (type == "equals") {
@@ -69,7 +69,7 @@ function queryTextAll(elem, text, type = "equals") {
     });
     
     elemNodes.forEach(node => {
-        var match = queryText(node, text, type);
+        let match = queryText(node, text, type);
         if (match) {
             matches = matches.concat(match);
         }
