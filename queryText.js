@@ -40,7 +40,7 @@ function queryText(elem, text, type = "equals") {
 
 
 /**
- * Returns an array of elements that match/contain the specified text.
+ * Returns an array of elements that match/includes the specified text.
  */
 function queryTextAll(elem, text, type = "equals") {
     
