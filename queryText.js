@@ -45,7 +45,7 @@ function queryText(elem, text, type = "equals") {
 function queryTextAll(elem, text, type = "equals") {
     
     if ( !(elem instanceof HTMLElement) || !text || !["equals", "contains"].includes(type)) {
-        return null;
+        return [];
     }
     
     var nodes = Array.from(elem.childNodes);
