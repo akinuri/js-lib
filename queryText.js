@@ -28,8 +28,7 @@ function queryText(elem, text, type = "equals") {
     }
     
     for (let i = 0; i < elemNodes.length; i++) {
-        let node = elemNodes[i];
-        var match = queryText(node, text, type);
+        var match = queryText(elemNodes[i], text, type);
         if (match) {
             return match;
         }
