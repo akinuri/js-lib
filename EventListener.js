@@ -1,14 +1,15 @@
-// ================================================== GLOBAL LISTENER CONTAINER
+// #region ==================== GLOBAL LISTENER CONTAINER
+
 var EventListeners = {
     listeners : [],
     forEach : function loopEventListeners(callback) {
-        for (var i = 0; i < EventListeners.listeners.length; i++) {
-            var listener = EventListeners.listeners[i];
+        for (let i = 0; i < EventListeners.listeners.length; i++) {
+            let listener = EventListeners.listeners[i];
             callback(listener, i);
         }
     },
     get : function getEventListeners(selector) {
-        var result = [];
+        let result = [];
         EventListeners.forEach(function (listener) {
             switch (typeof selector) {
                 case "object":
@@ -28,17 +29,21 @@ var EventListeners = {
     add : function logEventListener(listener) {
         EventListeners.listeners.push(listener);
     },
-    remove : function removeEventListener(victimListener) {
+    remove : function removeEventListener(targetListener) {
         EventListeners.forEach(function (listener, index) {
-            if (victimListener.target == listener.target && victimListener.type == listener.type && victimListener.callback == listener.callback) {
+            if (targetListener.target == listener.target && targetListener.type == listener.type && targetListener.callback == listener.callback) {
                 EventListeners.listeners.splice(index, 1);
             }
         });
     },
+    
 };
 
+//#endregion
 
-// ================================================== EVENT LISTENER OBJECT
+
+// #region ==================== EVENT LISTENER OBJECT
+
 function EventListener() {
     this.target         = null;
     this.type           = null;
@@ -68,8 +73,8 @@ EventListener.prototype.parseArgs = function parseArgs(target, type, callback) {
             }
             break;
         case 5:
-            if (typeof args[3] == "boolean") {
-                this.useCapture = arguments[3];
+            if (typeof arguments[3] == "boolean") {
+                this.useCapture     = arguments[3];
                 this.wantsUntrusted = arguments[4];
             }
             break;
@@ -94,79 +99,78 @@ EventListener.prototype.remove = function removeEventListener() {
     }
 };
 
-// ================================================== NATIVE API
+//#endregion
+
+
+// #region ==================== NATIVE API
 
 // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
-EventTarget.prototype.addEventListener = function (addEventListener) {
-    console.warn("EventTarget.prototype.addEventListener() has been modified.");
+EventTarget.prototype.addEventListener = function (nativeEventListenerAdder) {
+    console.info("[Info] EventTarget.prototype.addEventListener() has been modified.");
     return function () {
-        var evtList = null;
+        let listener = null;
         switch (arguments.length) {
             // EventTarget.addEventListener(type, callback)
             case 2:
-                evtList = new EventListener(this, arguments[0], arguments[1]);
-                addEventListener.call(evtList.target, evtList.type, evtList.callback);
-                console.log(evtList.callback);
-                EventListeners.add(evtList);
-                return evtList;
+                listener = new EventListener(this, arguments[0], arguments[1]);
+                nativeEventListenerAdder.call(listener.target, listener.type, listener.callback);
+                break;
             // EventTarget.addEventListener(type, callback, options)
             // EventTarget.addEventListener(type, callback, useCapture)
             case 3:
-                evtList = new EventListener(this, arguments[0], arguments[1]);
+                listener = new EventListener(this, arguments[0], arguments[1]);
                 switch (typeof arguments[2]) {
                     case "object":
-                        evtList.options = arguments[2];
-                        addEventListener.call(evtList.target, evtList.type, evtList.callback, evtList.options);
-                        EventListeners.add(evtList);
-                        return evtList;
+                        listener.options = arguments[2];
+                        nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.options);
+                        break;
                     case "boolean":
-                        evtList.useCapture = arguments[2];
-                        addEventListener.call(evtList.target, evtList.type, evtList.callback, evtList.useCapture);
-                        EventListeners.add(evtList);
-                        return evtList;
+                        listener.useCapture = arguments[2];
+                        nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.useCapture);
+                        break;
                 }
                 break;
             // EventTarget.addEventListener(type, callback, useCapture, wantsUntrusted)
             case 4:
-                evtList = new EventListener(this, arguments[0], arguments[1]);
+                listener = new EventListener(this, arguments[0], arguments[1]);
                 if (typeof arguments[2] == "boolean") {
-                    evtList.useCapture     = arguments[2];
-                    evtList.wantsUntrusted = arguments[3];
-                    addEventListener.call(evtList.target, evtList.type, evtList.callback, evtList.useCapture, evtList.wantsUntrusted);
-                    EventListeners.add(evtList);
-                    return evtList;
+                    listener.useCapture     = arguments[2];
+                    listener.wantsUntrusted = arguments[3];
+                    nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.useCapture, listener.wantsUntrusted);
                 }
                 break;
         }
+        if (listener) EventListeners.add(listener);
+        return listener;
     }
 }(EventTarget.prototype.addEventListener);
 
 // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
-EventTarget.prototype.removeEventListener = function (removeEventListener) {
-    console.warn("EventTarget.prototype.removeEventListener() has been modified.");
+EventTarget.prototype.removeEventListener = function (nativeEventListenerRemover) {
+    console.info("[Info] EventTarget.prototype.removeEventListener() has been modified.");
     return function () {
-        var evtList = null;
+        let listener = null;
         switch (arguments.length) {
             case 2:
-                evtList = new EventListener(this, arguments[0], arguments[1]);
-                removeEventListener.call(evtList.target, evtList.type, evtList.callback);
-                EventListeners.remove(evtList);
+                listener = new EventListener(this, arguments[0], arguments[1]);
+                nativeEventListenerRemover.call(listener.target, listener.type, listener.callback);
                 break;
             case 3:
-                evtList = new EventListener(this, arguments[0], arguments[1]);
+                listener = new EventListener(this, arguments[0], arguments[1]);
                 switch (typeof arguments[2]) {
                     case "object":
-                        evtList.options = arguments[2];
-                        removeEventListener.call(evtList.target, evtList.type, evtList.callback, evtList.options);
-                        EventListeners.remove(evtList);
+                        listener.options = arguments[2];
+                        nativeEventListenerRemover.call(listener.target, listener.type, listener.callback, listener.options);
                         break;
                     case "boolean":
-                        evtList.useCapture = arguments[2];
-                        removeEventListener.call(evtList.target, evtList.type, evtList.callback, evtList.useCapture);
-                        EventListeners.remove(evtList);
+                        listener.useCapture = arguments[2];
+                        nativeEventListenerRemover.call(listener.target, listener.type, listener.callback, listener.useCapture);
                         break;
                 }
                 break;
         }
+        if (listener) EventListeners.remove(listener);
     }
 }(EventTarget.prototype.removeEventListener);
+
+//#endregion
