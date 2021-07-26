@@ -119,15 +119,18 @@ EventTarget.prototype.addEventListener = function (nativeEventListenerAdder) {
             // EventTarget.addEventListener(type, callback, useCapture)
             case 3:
                 listener = new EventListener(this, arguments[0], arguments[1]);
-                switch (typeof arguments[2]) {
-                    case "object":
-                        listener.options = arguments[2];
-                        nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.options);
-                        break;
-                    case "boolean":
-                        listener.useCapture = arguments[2];
-                        nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.useCapture);
-                        break;
+                let thirdArgType = typeof arguments[2];
+                if (thirdArgType == "object"
+                    && (   "capture" in arguments[2]
+                        || "once" in arguments[2]
+                        || "passive" in arguments[2]
+                        || "signal" in arguments[2] ) ) {
+                    listener.options = arguments[2];
+                    nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.options);
+                }
+                else if (["boolean", "undefined", "object"].includes(thirdArgType)) {
+                    listener.useCapture = !!arguments[2];
+                    nativeEventListenerAdder.call(listener.target, listener.type, listener.callback, listener.useCapture);
                 }
                 break;
             // EventTarget.addEventListener(type, callback, useCapture, wantsUntrusted)

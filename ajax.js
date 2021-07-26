@@ -1,5 +1,6 @@
 // WIP
 // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+// https://developer.mozilla.org/en-US/docs/Web/API/FormData
 // https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 
 function ajax(url, options) {
@@ -16,7 +17,7 @@ function ajax(url, options) {
     
     if (options.headers) {
         for (let header in headers) {
-            let = value = headers[header];
+            let value = headers[header];
             xhr.setRequestHeader(header, value);
         }
     }
@@ -61,6 +62,14 @@ function ajax(url, options) {
     
     if (options.timeout) {
         request.timeout = options.timeout;
+    }
+    
+    if (options.data) {
+        let data = new FormData();
+        for (let key in options.data) {
+            data.append(key, options.data[key]);
+        }
+        options.data = data;
     }
     
     request.send(options.data);

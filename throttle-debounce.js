@@ -6,7 +6,6 @@ function throttle(callback, delay) {
         if (timeoutHandler == null) {
             timeoutHandler = setTimeout(function () {
                 callback();
-                clearInterval(timeoutHandler);
                 timeoutHandler = null;
             }, delay);
         }

@@ -7,17 +7,38 @@
     Math.median(a [, b [, c ...]])
 */
 
-Math.random = function (random) {
-    return function (a, b) {
+Math.random = function (MathRandom) {
+    return function (min = null, max = null, round = null) {
         switch (arguments.length) {
             case 1:
-                return random() * a;
+                if (typeof min == "boolean") {
+                    round = min;
+                    max = null;
+                    min = null;
+                } else {
+                    max = min;
+                    min = 0;
+                }
+                break;
             case 2: 
-                return a + random() * (b - a);
+                if (typeof max == "boolean") {
+                    round = max;
+                    max = min;
+                    min = 0;
+                }
+                break;
         }
-        return random();
+        let random = MathRandom();
+        if (min !== null && max !== null) {
+            random = min + MathRandom() * (max - min);
+        }
+        if (round === true) {
+            random = Math.round(random);
+        }
+        return random;
     }
 }(Math.random);
+
 
 Math.sum = function () {
     return Array.from(arguments).reduce(function (sum, currentValue) {
@@ -25,10 +46,12 @@ Math.sum = function () {
     });
 };
 
+
 Math.avg = function () {
     var input = Array.from(arguments);
     return Math.sum(input) / input.length;
 };
+
 
 Math.factorial = function (n) {
     var result = 1;
@@ -38,6 +61,7 @@ Math.factorial = function (n) {
     }
     return result;
 };
+
 
 Math.factors = function (number) {
     var factors	= [];
@@ -61,6 +85,7 @@ Math.factors = function (number) {
     }
 };
 
+
 Math.median = function () {
     var sorted = Array.from(arguments).sort();
     var values = [];
@@ -73,6 +98,7 @@ Math.median = function () {
     return Math.avg.apply(null, values);
 };
 
+
 Math.stdev = function () {
     var values = Array.from(arguments);
     var average = Math.avg.apply(null, values);
@@ -80,10 +106,4 @@ Math.stdev = function () {
     var stdev = Math.sqrt(variance);
     return stdev;
 };
-
-
-
-
-
-
 
