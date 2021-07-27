@@ -1,12 +1,12 @@
-class Stack {
+class Queue {
     
     #items = [];
     #maxSize = null;
-    #shiftOnOverflow = false
+    #dequeueOnOverflow = false
     
-    constructor(maxSize = null, shiftOnOverflow = false) {
+    constructor(maxSize = null, dequeueOnOverflow = false) {
         if (maxSize != null) this.#maxSize = maxSize;
-        this.#shiftOnOverflow = shiftOnOverflow;
+        this.#dequeueOnOverflow = dequeueOnOverflow;
     }
     
     setMaxSize = (n) => this.#maxSize = n;
@@ -15,12 +15,12 @@ class Stack {
     getSize = () => this.#items.length;
     getItems = () => this.#items;
     
-    push(item) {
-        let popped = undefined;
+    enqueue(item) {
+        let dequeued = undefined;
         if (this.#maxSize != null) {
             if (this.getSize() >= this.#maxSize) {
-                if (this.#shiftOnOverflow) {
-                    popped = this.#items.shift();
+                if (this.#dequeueOnOverflow) {
+                    dequeued = this.dequeue();
                     this.#items.push(item);
                 }
             } else {
@@ -29,11 +29,19 @@ class Stack {
         } else {
             this.#items.push(item);
         }
-        return popped;
+        return dequeued;
     }
     
-    pop() {
-        return this.#items.pop();
+    dequeue() {
+        return this.#items.shift();
+    }
+    
+    front() {
+        return this.#items[this.#items.length - 1];
+    }
+    
+    back() {
+        return this.#items[0];
     }
     
 }
