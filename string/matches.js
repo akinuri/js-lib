@@ -1,7 +1,7 @@
 String.prototype.matches = function (regex) {
     var results = [];
-    var match	= null;
-    var regex	= RegExp.global(regex);
+    var match   = null;
+    var regex   = RegExp.global(regex);
     while (match = regex.exec(this)) {
         var result = {
             match  : match.shift(),
