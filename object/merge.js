@@ -1,7 +1,7 @@
 /**
  * Merges two objects in various ways.
  * 
- * @requires Object.merge
+ * @requires Object.clone()
  */
 Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
     
@@ -35,7 +35,7 @@ Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
         */
         options.unique ??= {
             keepLeft  : true,
-            keepRight : false,
+            keepRight : true,
         };
         options.unique.keepLeft  ??= true;
         options.unique.keepRight ??= false;
@@ -84,7 +84,7 @@ Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
             if (isScalar(leftObj[key])) {
                 result[key] = leftObj[key];
             } else {
-                result[key] = JSON.parse(JSON.stringify(leftObj[key]));
+                result[key] = Object.clone(leftObj[key]);
             }
         });
     }
@@ -95,7 +95,7 @@ Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
             if (isScalar(rightObj[key])) {
                 result[key] = rightObj[key];
             } else {
-                result[key] = JSON.parse(JSON.stringify(rightObj[key]));
+                result[key] = Object.clone(rightObj[key]);
             }
         });
     }

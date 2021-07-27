@@ -373,7 +373,8 @@ class NumberFormatter {
             currencyIndicator = locale.indicator.sign;
         }
         
-        locale.currency.type = false;
+        locale.indicator.type = false;
+        locale.indicator.sign = false;
         number = NumberFormatter.currency(number, locale);
         
         let [integer, fraction] = number.split(locale.seperator.decimal);
@@ -387,7 +388,7 @@ class NumberFormatter {
             "class" : NumberFormatter.#elementClasses.currency
         }, currencyIndicator);
         
-        switch (locale.currency.position) {
+        switch (locale.indicator.position) {
             case "before":
                 moneyEl.append(curEl);
                 moneyEl.append(amountEl);
