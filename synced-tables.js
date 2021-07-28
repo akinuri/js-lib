@@ -1,4 +1,5 @@
-function syncedTableColumns($headerTable, $dataTable) {    
+// TODO: rewrite this, since now we have sync-width.js
+function syncedTableColumns($headerTable, $dataTable) {
     var $headerColumns      = $headerTable.find("tr:first-child th");
     var $headerColumnWidths = [];
     
