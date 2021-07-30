@@ -37,15 +37,15 @@ Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
             keepLeft  : true,
             keepRight : true,
         };
-        options.unique.keepLeft  ??= true;
-        options.unique.keepRight ??= false;
+                                          
+                                           
         options.common ??= {
             scalars : {
                 overwrite : true,
             },
             arrays : {
-                overwrite : true,
-                merge     : false,
+                overwrite : false,
+                merge     : true,
                 unique    : false,
             },
             mixed : {
@@ -56,19 +56,27 @@ Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
         options.common.scalars ??= {
             overwrite : true,
         };
-        options.common.scalars.overwrite ??= true;
+                                                  
         options.common.arrays ??= {
-            overwrite : true,
-            merge     : false,
+            overwrite : false,
+            merge     : true,
+            unique    : false,
         };
-        options.common.arrays.overwrite ??= true;
-        options.common.arrays.merge ??= false;
-        options.common.arrays.merge = !options.common.arrays.overwrite;
+                                                 
+                                              
+                                                                       
         options.common.mixed ??= {
             overwrite  : true,
             ignoreNull : false,
         };
-        options.common.mixed.overwrite ??= true;
+        options.unique.keepLeft  ??= true;
+        options.unique.keepRight ??= false;
+        options.common.scalars.overwrite ??= true;
+        options.common.arrays.overwrite ??= false;
+        options.common.arrays.merge ??= true;
+        options.common.arrays.merge = !options.common.arrays.overwrite;
+        options.common.arrays.unique ??= false;
+        options.common.mixed.overwrite  ??= true;
         options.common.mixed.ignoreNull ??= false;
     }
     
@@ -100,41 +108,42 @@ Object.merge = function mergeObjects(leftObj, rightObj, options = {}) {
         });
     }
     
-    commonKeys.forEach(commonKey => {
+    commonKeys.forEach(key => {
         
-        let leftValue  = leftObj[commonKey];
-        let rightValue = rightObj[commonKey];
+        let leftValue  = leftObj[key];
+        let rightValue = rightObj[key];
         
         // two scalars
         if (isScalar(leftValue) && isScalar(rightValue)) {
             if (options.common.scalars.overwrite) {
-                result[commonKey] = rightValue;
+                result[key] = rightValue;
             }
         }
         
         // two arrays
         else if (leftValue instanceof Array && rightValue instanceof Array) {
             if (options.common.arrays.merge) {
-                result[commonKey] = leftValue.concat(rightValue);
+                result[key] = leftValue.concat(rightValue);
                 if (options.common.arrays.unique) {
-                    result[commonKey] = Array.from(new Set(result[commonKey]))
+                    result[key] = Array.from(new Set(result[key]))
                 }
             } else {
-                result[commonKey] = rightValue;
+                result[key] = rightValue;
             }
         }
         
         // two objects
         else if (typeof leftValue == "object" && typeof rightValue == "object") {
-            result[commonKey] = Object.merge(leftValue, rightValue, options);
+            result[key] = Object.merge(leftValue, rightValue, options);
         }
         
         // mixed
         else {
             if (options.common.mixed.overwrite) {
                 if ( (rightValue === null && !options.common.mixed.ignoreNull) ||
-                     (rightValue !== null) ) {
-                    result[commonKey] = rightValue;
+                      rightValue !== null )
+                {
+                    result[key] = rightValue;
                 }
             }
         }
