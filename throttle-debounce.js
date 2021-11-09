@@ -2,22 +2,24 @@
 
 function throttle(callback, delay) {
     var timeoutHandler = null;
-    return function () {
+    return function throttleInner() {
+        let passedArgs = Array.from(arguments);
         if (timeoutHandler == null) {
             timeoutHandler = setTimeout(function () {
-                callback();
+                callback.apply(this, passedArgs);
                 timeoutHandler = null;
-            }, delay);
+            }.bind(this), delay);
         }
-    }
+    }.bind(this);
 }
 
 function debounce(callback, delay) {
     var timeoutHandler = null;
-    return function () {
+    return function debounceInner() {
+        let passedArgs = Array.from(arguments);
         clearTimeout(timeoutHandler);
         timeoutHandler = setTimeout(function () {
-            callback();
-        }, delay);
-    }
+            callback.apply(this, passedArgs);
+        }.bind(this), delay);
+    }.bind(this);
 }
