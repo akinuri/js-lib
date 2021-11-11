@@ -24,7 +24,7 @@ var UID = {
     
     /**
      * Generates an id.
-     * Logs it in internal storage,
+     * Logs it in the internal storage,
      *  AND (if desired) to the console,
      *  AND generates a new id if it collides with previous ids.
      */
