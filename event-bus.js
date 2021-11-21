@@ -52,9 +52,9 @@ class EventBus {
     dispatch(eventName, ...args) {
         const handlers = this.#listeners.get(eventName);
         if (handlers) {
+            let e = {name : eventName};
+            args.unshift(e);
             for (let handler of handlers) {
-                let e = {name : eventName};
-                args.unshift(e);
                 handler.apply(this, args);
             }
         }
