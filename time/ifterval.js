@@ -5,17 +5,18 @@ class Ifterval {
     
     condition   = null;
     action      = null;
-    interval    = null;
+    interval    = 100;
     attempts    = 0;
-    maxAttempts = null;
+    maxAttempts = 2;
+    conditionMetAt = null;
     
     timerHandle = null;
     
     constructor(
         conditionCallback,
         actionCallback,
-        interval,
-        maxAttempts,
+        maxAttempts = 2,
+        interval = 100,
     ) {
         this.condition   = conditionCallback;
         this.action      = actionCallback;
@@ -26,15 +27,16 @@ class Ifterval {
         
         this.timerHandle = setInterval(function () {
             
-            self.attempts++;
-            
             if (self.condition()) {
-                self.action();
+                self.conditionMetAt = new Date().valueOf();
+                self.action.call(this);
                 clearInterval(self.timerHandle);
                 self.timerHandle = null;
             }
             
-            if (self.attempts >= self.maxAttempts) {
+            self.attempts++;
+            
+            if (self.attempts >= self.maxAttempts && self.timerHandle) {
                 clearInterval(self.timerHandle);
                 self.timerHandle = null;
             }
