@@ -1,6 +1,6 @@
 // https://stackoverflow.com/a/11972692/2202732
-HTMLCollection.prototype.shuffle = function shuffleCollection() {
-    for (var i = this.length; i >= 0; i--) {
-        this[0].parentElement.appendChild(this[Math.random() * i | 0]);
+function shuffleChildren(parent) {
+    for (var i = parent.children.length; i >= 0; i--) {
+        parent.appendChild(parent.children[Math.round(Math.random() * i) | 0]);
     }
-};
+}
