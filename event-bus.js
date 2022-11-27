@@ -9,15 +9,16 @@ class EventBus {
     
     #listeners = new Map();
     
-    /* TODO: meta and additional functionalities
-     *   * prependListener()
-     *   * bool isOnce = false parameter for new listeners
-     *   * dispatch "newListener" and "oldListener" meta events?
-     */
+    // TODO: add meta and additional functionalities
+    /* 
+        prependListener()
+        bool isOnce = false parameter for new listeners
+        dispatch "newListener" and "oldListener" meta events?
+    */
     
     addListener(eventName, eventHandler) {
-        if (typeof eventHandler !== 'function') {
-            throw new TypeError('The event handler must be a function');
+        if (typeof eventHandler !== "function") {
+            throw new TypeError("The event handler must be a function");
         }
         if (typeof eventName == "string") {
             let handlers = this.#listeners.get(eventName);
@@ -60,4 +61,5 @@ class EventBus {
         }
         return this;
     }
+    
 }
