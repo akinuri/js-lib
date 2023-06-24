@@ -1,7 +1,7 @@
-Math.factors = function (number) {
-    var factors = [];
-    var primes  = {};
-    var n       = 2;
+function factors(number) {
+    let factors = [];
+    let primes  = {};
+    let n       = 2;
     while (number != 1) {
         if (number % n == 0) {
             number = number / n;
@@ -15,4 +15,4 @@ Math.factors = function (number) {
     });
     primes = Object.values(primes);
     return  {factors, primes}
-};
+}

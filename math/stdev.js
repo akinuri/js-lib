@@ -1,7 +1,7 @@
-Math.stdev = function () {
-    var values = Array.from(arguments);
-    var average = Math.avg.apply(null, values);
-    var variance = values.map(value => value * value) / values.length;
-    var stdev = Math.sqrt(variance);
+function stdev() {
+    let values   = Array.from(arguments);
+    let average  = avg(...values);
+    let variance = values.map(value => value * value) / values.length;
+    let stdev    = Math.sqrt(variance);
     return stdev;
-};
+}
