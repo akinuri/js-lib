@@ -1,3 +1,3 @@
-Array.prototype.removeItemByIndex = function (index) {
-    return this.splice(index, 1);
-};
+function removeItemByIndex(array, index) {
+    return array.splice(index, 1);
+}

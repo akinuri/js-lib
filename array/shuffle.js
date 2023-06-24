@@ -1,8 +1,8 @@
-Array.prototype.shuffle = function shuffle() {
-    for (var i = this.length - 1; i > 0; i--) {
-        var random  = Math.floor(Math.random() * (i + 1));
-        var temp    = this[i];
-        this[i]     = this[random];
-        this[random] = temp;
+function shuffle(...items) {
+    for (let i = items - 1; i > 0; i--) {
+        let random    = Math.floor(Math.random() * (i + 1));
+        let temp      = items[i];
+        items[i]      = items[random];
+        items[random] = temp;
     }
-};
+}
