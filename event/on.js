@@ -1,7 +1,12 @@
-function on(element, event, callback) {
+function on(elements, event, callback) {
     if (callback) {
-        element.addEventListener(event, function (e) {
-            callback.call(this, e);
+        if (!Array.isArray(elements)) {
+            elements = [elements];
+        }
+        elements.forEach(element => {
+            element.addEventListener(event, function (e) {
+                callback.call(this, e);
+            });
         });
     }
 }
