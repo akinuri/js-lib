@@ -3,8 +3,8 @@ function on(elements, events, callback) {
         if (!Array.isArray(elements)) {
             elements = [elements];
         }
-        if (!Array.isArray(events)) {
-            events = [events];
+        if (typeof events == "string") {
+            events = events.split(" ");
         }
         elements.forEach(element => {
             events.forEach(event => {
