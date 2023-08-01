@@ -1,8 +1,32 @@
 function on(elements, events, callback) {
-    if (callback) {
-        if (!Array.isArray(elements)) {
-            elements = [elements];
+    if (!Array.isArray(elements)) {
+        elements = [elements];
+    }
+    let hasEventCallbackMap = (
+        typeof events == "object"
+        && !Array.isArray(events)
+        && events !== null
+        && typeof callback == "undefined"
+    );
+    if (hasEventCallbackMap) {
+        let eventCallbackMap = events;
+        delete events;
+        delete callback;
+        for (let events in eventCallbackMap) {
+            let callback = eventCallbackMap[events];
+            if (typeof callback == "function") {
+                events = events.split(" ");
+                elements.forEach(element => {
+                    events.forEach(event => {
+                        element.addEventListener(event, function (e) {
+                            callback.call(this, e);
+                        });
+                    });
+                });
+            }
         }
+    }
+    else if (callback && typeof callback == "function") {
         if (typeof events == "string") {
             events = events.split(" ");
         }
