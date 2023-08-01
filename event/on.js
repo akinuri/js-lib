@@ -1,18 +1,20 @@
-function on(elements, event, callback) {
+function on(elements, events, callback) {
     if (callback) {
         if (!Array.isArray(elements)) {
             elements = [elements];
         }
+        if (!Array.isArray(events)) {
+            events = [events];
+        }
         elements.forEach(element => {
-            element.addEventListener(event, function (e) {
-                callback.call(this, e);
+            events.forEach(event => {
+                element.addEventListener(event, function (e) {
+                    callback.call(this, e);
+                });
             });
         });
     }
 }
-// TODO: on([el1, el2, el3], "click", callback)
-// TODO: on(el1, ["click", "mousenter", "mouseleave"], callback)
-// TODO: on([el1, el2, el3], ["click", "mousenter", "mouseleave"], callback)
 
 function ondomload(callback) {
     on(window, "DOMContentLoaded", callback);
