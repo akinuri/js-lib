@@ -2,7 +2,26 @@
 // https://en.wikipedia.org/wiki/Romanization
 // https://stackoverflow.com/a/34867642/2202732
 
-let LATINIZATION_MAP = {
+function latinize(text) {
+    let letterMap = Object.assign({}, latinize.LATINIZATION_MAP);
+    latinize.regexifyLatinizationMap(letterMap);
+    for (let targetChar in letterMap) {
+        let cases = letterMap[targetChar];
+        text = text.replace(cases, targetChar);
+    }
+    return text;
+}
+
+latinize.regexifyLatinizationMap = function (letterMap) {
+    for (let targetChar in letterMap) {
+        let cases = letterMap[targetChar];
+        cases = cases.replaceAll(" ", "|");
+        cases = new RegExp(cases);
+        letterMap[targetChar] = cases;
+    }
+};
+
+latinize.LATINIZATION_MAP = {
     "a"  : "à á â ã ä å æ",
     "c"  : "ç",
     "d"  : "ð",
@@ -34,21 +53,3 @@ let LATINIZATION_MAP = {
     "U"  : "Ù Ú Û Ü",
     "Y"  : "Ý Ÿ",
 };
-
-function regexifyLatinizationMap() {
-    for (let targetChar in LATINIZATION_MAP) {
-        let cases = LATINIZATION_MAP[targetChar];
-        cases = cases.replaceAll(" ", "|");
-        cases = new RegExp(cases);
-        LATINIZATION_MAP[targetChar] = cases;
-    }
-}
-regexifyLatinizationMap();
-
-function latinize(text) {
-    for (let targetChar in LATINIZATION_MAP) {
-        let cases = LATINIZATION_MAP[targetChar];
-        text = text.replace(cases, targetChar);
-    }
-    return text;
-}
