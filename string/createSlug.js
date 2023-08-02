@@ -66,8 +66,8 @@ createSlug.punctuationChars = [
 ];
 
 createSlug.purgePunctuation = function (str) {
-    for (let map of createSlug.punctuationChars) {
-        str = str.replaceAll(map[0], map[1]);
+    for (let item of createSlug.punctuationChars) {
+        str = str.replaceAll(item, "");
     }
     return str;
 };
