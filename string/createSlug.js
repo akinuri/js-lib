@@ -2,6 +2,7 @@
 // https://en.wikipedia.org/wiki/Slug_(publishing)
 // https://www.semrush.com/blog/what-is-a-url-slug/
 // https://en.wikipedia.org/wiki/URI_normalization
+
 function createSlug(string, userOptions) {
     
     let defaultOptions = {
@@ -33,8 +34,11 @@ function createSlug(string, userOptions) {
     
     if (["kebab", "snake"].includes(options.case)) {
         string = string.split(/\s+/);
-        if      (options.case == "kebab") string = string.join("-");
-        else if (options.case == "snake") string = string.join("_");
+        if (options.case == "kebab") {
+            string = string.join("-");
+        } else if (options.case == "snake") {
+            string = string.join("_");
+        }
     }
     
     if (options.strip) {
@@ -47,6 +51,7 @@ function createSlug(string, userOptions) {
 }
 
 createSlug.normalizationMap = [
+    [".", " "],
     ["-", " "],
     ["—", " "],
     ["&", " and "],
