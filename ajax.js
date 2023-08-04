@@ -15,8 +15,8 @@ function ajax(url, options) {
     request.open(options.method, url, options.async, options.user, options.password);
     
     if (options.headers) {
-        for (let header in headers) {
-            let value = headers[header];
+        for (let header in options.headers) {
+            let value = options.[header];
             xhr.setRequestHeader(header, value);
         }
     }
