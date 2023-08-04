@@ -16,7 +16,7 @@ function ajax(url, options) {
     
     if (options.headers) {
         for (let header in options.headers) {
-            let value = options.[header];
+            let value = options.headers[header];
             xhr.setRequestHeader(header, value);
         }
     }
