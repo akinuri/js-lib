@@ -6,6 +6,9 @@ class BreakpointObserver {
     change          = [];
     
     constructor(breakpoints) {
+        breakpoints = Object.entries(breakpoints);
+        breakpoints.sort((a, b) => a[1] - b[1]);
+        breakpoints = Object.fromEntries(breakpoints);
         this.breakpoints = breakpoints;
     }
     
@@ -26,10 +29,9 @@ class BreakpointObserver {
     getCurrentBreakpoint() {
         let breakpoint = null;
         let breakpoints = Object.entries(this.breakpoints);
-        breakpoints.sort((a, b) => a[1] - b[1]);
         for (const breakpointEntry of breakpoints) {
             let [bpName, bpWidth] = breakpointEntry;
-            if (innerWidth > bpWidth) {
+            if (innerWidth >= bpWidth) {
                 breakpoint = bpName;
             } else {
                 break;
