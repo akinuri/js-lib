@@ -4,13 +4,16 @@
 
 function ajax(url, options) {
     
-    options.method   = options.method   || "GET";
-    options.async    = options.async    || true;
-    options.user     = options.user     || null;
-    options.password = options.password || null;
-    options.data     = options.data     || null;
+    options.method       = options.method       || "GET";
+    options.async        = options.async        || true;
+    options.user         = options.user         || null;
+    options.password     = options.password     || null;
+    options.data         = options.data         || null;
+    options.responseType = options.responseType || "text";
     
     let request = new XMLHttpRequest();
+    
+    request.responseType = options.responseType;
     
     request.open(options.method, url, options.async, options.user, options.password);
     
@@ -26,10 +29,14 @@ function ajax(url, options) {
     }
     
     if (options.progress) {
+        request.onprogress = function (e) {
+            options.progress.call(request, e);
+        };
+    }
+    
+    if (options.uploadProgress) {
         request.upload.onprogress = function (e) {
-            if (event.lengthComputable) {
-                options.progress.call(request, e);
-            }
+            options.progress.call(request, e);
         };
     }
     
