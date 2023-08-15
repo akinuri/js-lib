@@ -36,7 +36,7 @@ function ajax(url, options) {
     
     if (options.uploadProgress) {
         request.upload.onprogress = function (e) {
-            options.progress.call(request, e);
+            options.uploadProgress.call(request, e);
         };
     }
     
