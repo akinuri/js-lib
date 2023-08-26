@@ -10,8 +10,8 @@ function on(elements, events, callback) {
     );
     if (hasEventCallbackMap) {
         let eventCallbackMap = events;
-        delete events;
-        delete callback;
+        events = undefined;
+        callback = undefined;
         for (let events in eventCallbackMap) {
             let callback = eventCallbackMap[events];
             if (typeof callback == "function") {
