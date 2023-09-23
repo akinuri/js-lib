@@ -1,46 +1,50 @@
-function Duration(num) {
-    this.ms = null;
-    this.s  = null;
-    this.m  = null;
-    this.h  = null;
-    this.d  = null;
-    this.parse(num);
+function strToDur(str) {
+    let dur_h = 0;
+    let dur_m = 0;
+    let dur_s = 0;
+    const match = str.match(/(?:(\d+)h ?)?(?:(\d+)m ?)?(?:(\d+)s)?/);
+    if (match) {
+        dur_h = parseInt(match[1]) || dur_h;
+        dur_m = parseInt(match[2]) || dur_m;
+        dur_s = parseInt(match[3]) || dur_s;
+    }
+    const dur = {
+        h: dur_h,
+        m: dur_m,
+        s: dur_s,
+    };
+    return dur;
 }
 
-Duration.constants = {
-    ms : 1,
-    s  : 1000,
-    m  : 1000 * 60,
-    h  : 1000 * 60 * 60,
-    d  : 1000 * 60 * 60 * 24,
-};
+function durToStr(dur) {
+    const parts = [];
+    if (dur.h !== 0) {
+        parts.push(dur.h + 'h');
+    }
+    if (dur.m !== 0 || dur.h !== 0) {
+        parts.push(dur.m + 'm');
+    }
+    if (dur.s !== 0 || dur.m !== 0 || dur.h !== 0) {
+        parts.push(dur.s + 's');
+    }
+    const result = parts.join(' ');
+    return result;
+}
 
-Duration.prototype.parse = function num2duration(num) {
-    var remainder = 0;
-    
-    this.d = Math.floor(num / Duration.constants.d);
-    remainder  = num % Duration.constants.d;
-    if (this.d == 0)
-        remainder = num;
-    
-    this.h = Math.floor(remainder / Duration.constants.h);
-    remainder  = remainder % Duration.constants.h;
-    if (this.h == 0)
-        remainder = num;
-    
-    this.m = Math.floor(remainder / Duration.constants.m);
-    remainder  = remainder % Duration.constants.m;
-    if (this.m == 0)
-        remainder = num;
-    
-    this.s = Math.floor(remainder / Duration.constants.s);
-    remainder  = remainder % Duration.constants.s;
-    if (this.s == 0)
-        remainder = num;
-    
-    this.ms = remainder;
-};
+function secToDur(sec) {
+    let dur_h = Math.floor(sec / (60 * 60));
+    sec -= dur_h * 60 * 60;
+    let dur_m = Math.floor(sec / 60);
+    sec -= dur_m * 60;
+    const dur_s = sec;
+    const dur = {
+        h: dur_h,
+        m: dur_m,
+        s: dur_s,
+    };
+    return dur;
+}
 
-Duration.prototype.toString = function () {
-    return this.h.toString().padStart(2, "0") +":"+ this.m.toString().padStart(2, "0") +":"+ this.s.toString().padStart(2, "0") +"."+ this.ms.toString().padStart(3, "0");
-};
+function durToSec(dur) {
+    return (dur.h * 60 * 60) + (dur.m * 60) + dur.s;
+}
