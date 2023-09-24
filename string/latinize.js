@@ -1,7 +1,8 @@
-// https://en.wikipedia.org/wiki/Transliteration
-// https://en.wikipedia.org/wiki/Romanization
-// https://stackoverflow.com/a/34867642/2202732
-
+/**
+ * @see https://en.wikipedia.org/wiki/Transliteration
+ * @see https://en.wikipedia.org/wiki/Romanization
+ * @see https://stackoverflow.com/a/34867642/2202732
+ */
 function latinize(text) {
     let letterMap = Object.assign({}, latinize.LATINIZATION_MAP);
     latinize.regexifyLatinizationMap(letterMap);

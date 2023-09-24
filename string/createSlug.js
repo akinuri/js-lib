@@ -1,8 +1,10 @@
-// https://en.wikipedia.org/wiki/Clean_URL#Slug
-// https://en.wikipedia.org/wiki/Slug_(publishing)
-// https://www.semrush.com/blog/what-is-a-url-slug/
-// https://en.wikipedia.org/wiki/URI_normalization
-
+/**
+ * @borrows latinize()
+ * @see https://en.wikipedia.org/wiki/Clean_URL#Slug
+ * @see https://en.wikipedia.org/wiki/Slug_(publishing)
+ * @see https://www.semrush.com/blog/what-is-a-url-slug/
+ * @see https://en.wikipedia.org/wiki/URI_normalization
+ */
 function createSlug(string, userOptions) {
     
     let defaultOptions = {
@@ -15,6 +17,8 @@ function createSlug(string, userOptions) {
     };
     
     let options = {...defaultOptions, ...userOptions};
+    
+    string = string.trim();
     
     if (options.latinize) {
         string = latinize(string);
