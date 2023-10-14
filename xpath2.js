@@ -68,4 +68,29 @@ class XPath2 {
         return xpathResult.singleNodeValue;
     }
     
+    static getElementsByXPath(xpath, topParent = null) {
+        if (topParent) {
+            if (typeof topParent == "string") {
+                topParent = document.querySelector(topParent);
+            } else if (parent instanceof HTMLElement) {
+                topParent = parent;
+            }
+        } else {
+            topParent = document.documentElement;
+        }
+        let xpEvaluator = new XPathEvaluator();
+        let xpathResult = xpEvaluator.evaluate(
+            xpath,
+            topParent,
+            null,
+            XPathResult.ORDERED_NODE_ITERATOR_TYPE
+        );
+        let elements = [];
+        let node = null;
+        while (node = xpathResult.iterateNext()) {
+            elements.push(node);
+        }
+        return elements;
+    }
+    
 }
