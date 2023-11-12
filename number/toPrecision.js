@@ -1,3 +1,7 @@
-function toPrecision(number, precision) {
-    return parseFloat(number.toFixed(precision));
+function toPrecision(number, precision, asNumber = true) {
+    number = number.toFixed(precision);
+    if (asNumber) {
+        number = parseFloat(number);
+    }
+    return number;
 }

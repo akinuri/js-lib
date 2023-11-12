@@ -1,6 +1,11 @@
-function addRangeTicks(range) {
-    let min = parseFloat(range.min);
-    let max = parseFloat(range.max);
+/**
+ * @uses number/getPrecision()
+ * @uses number/toPrecision()
+ * @uses string/genRandomString()
+ */
+function addRangeTicks(range, datalistClass = null) {
+    let min  = parseFloat(range.min);
+    let max  = parseFloat(range.max);
     let step = parseFloat(range.step);
     let precision = getPrecision(step);
     let tickValues = [];
@@ -12,6 +17,9 @@ function addRangeTicks(range) {
     }
     let datalist = document.createElement("datalist");
     datalist.id = "range-ticks-" + genRandomString();
+    if (datalistClass) {
+        datalist.className = datalistClass;
+    }
     for (let tickValue of tickValues) {
         let option = document.createElement("option");
         option.value = tickValue;
