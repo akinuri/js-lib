@@ -9,6 +9,9 @@ function getAbsPos(element) {
     return { top, left };
 }
 
+/**
+ * @uses html/getAbsPos()
+ */
 function getRelPos(child, parent) {
     let parentAbsPos = getAbsPos(parent || child.parentElement);
     let childAbsPos  = getAbsPos(child);

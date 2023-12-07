@@ -47,3 +47,11 @@ function ondomload(callback) {
 function onwindowload(callback) {
     on(window, "load", callback);
 }
+
+function trigger(element, eventName, isCustomEvent = false, options = {}) {
+    let event = isCustomEvent
+        ? new CustomEvent(eventName, options)
+        : new Event(eventName, options);
+    element.dispatchEvent(event);
+}
+
