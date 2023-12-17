@@ -11,26 +11,43 @@ class EventBus {
     
     // TODO: add meta and additional functionalities
     /* 
-        prependListener()
-        bool isOnce = false parameter for new listeners
-        dispatch "newListener" and "oldListener" meta events?
+        prependListener(): listener ordering
+        bool isOnce = false: run the handler once and remove it?
+        dispatch meta events?
+            ListenerAdded
+            ListenerRemoved
+            EventDispatched
     */
     
-    addListener(eventName, eventHandler) {
+    addListener(eventName, eventHandler, isOnce = false) {
         if (typeof eventHandler !== "function") {
-            throw new TypeError("The event handler must be a function");
+            let eventNameString;
+            if (typeof eventName == "string") {
+                eventNameString = `"${eventName}"`;
+            } else if (eventName instanceof Array) {
+                eventNameString = "[" + eventName.map(en => `"${en}"`) + "]";
+            }
+            throw new TypeError(`The event handler (for ${eventNameString}) must be a function.`);
         }
         if (typeof eventName == "string") {
             let handlers = this.#listeners.get(eventName);
             if (!handlers) {
                 handlers = new Set();
-                this.#listeners.set(eventName, handlers); 
+                this.#listeners.set(eventName, handlers);
             }
-            handlers.add(eventHandler);
+            if (isOnce) {
+                const onceHandler = (...args) => {
+                    this.removeListener(eventName, onceHandler);
+                    eventHandler.apply(null, args);
+                };
+                handlers.add(onceHandler);
+            } else {
+                handlers.add(eventHandler);
+            }
         }
         else if (eventName instanceof Array) {
             for (let event of eventName) {
-                this.addListener(event, eventHandler);
+                this.addListener(event, eventHandler, isOnce);
             }
         }
         return this;
