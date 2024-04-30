@@ -1,4 +1,7 @@
 function on(elements, events, callback) {
+    if (typeof elements == "string") {
+        elements = Array.from(document.querySelectorAll(elements));
+    }
     if (!Array.isArray(elements)) {
         elements = [elements];
     }
@@ -31,6 +34,9 @@ function on(elements, events, callback) {
             events = events.split(" ");
         }
         elements.forEach(element => {
+            if (!element) {
+                return;
+            }
             events.forEach(event => {
                 element.addEventListener(event, function (e) {
                     callback.call(this, e);
