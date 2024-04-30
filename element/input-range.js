@@ -1,7 +1,7 @@
 /**
  * @uses number/getPrecision()
  * @uses number/toPrecision()
- * @uses string/genRandomString()
+ * @uses string/generateRandomString()
  */
 function addRangeTicks(range, datalistClass = null) {
     let min  = parseFloat(range.min);
@@ -16,7 +16,7 @@ function addRangeTicks(range, datalistClass = null) {
         return;
     }
     let datalist = document.createElement("datalist");
-    datalist.id = "range-ticks-" + genRandomString();
+    datalist.id = "range-ticks-" + generateRandomString();
     if (datalistClass) {
         datalist.className = datalistClass;
     }
