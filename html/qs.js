@@ -25,3 +25,16 @@ function qsa(query, parent) {
     }
     return Array.from(parent.querySelectorAll(query));
 }
+
+function extendHTMLElementWithQS(qsName = "qs", qsaName = "qsa") {
+    if (qsName in HTMLElement.prototype == false) {
+        HTMLElement.prototype[qsName] = function (query) {
+            return qs(query, this);
+        };
+    }
+    if (qsaName in HTMLElement.prototype == false) {
+        HTMLElement.prototype[qsaName] = function (query) {
+            return qsa(query, this);
+        };
+    }
+}
